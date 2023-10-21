@@ -1,0 +1,123 @@
+   {/* <Grid item xs={12} lg={6}>
+                {/* Discount Qty Step(Buy X) */}
+                <span style={{ color: "rgba(88, 89, 91, 1)" }}>
+                  Discount Qty Step(Buy X)
+                </span>
+                <Field
+                  name="max_quantity"
+                  type="text"
+                  style={{
+                    padding: 10,
+                    width: "100%",
+                    borderRadius: 5,
+                    border: "1px solid",
+                    marginTop: 10,
+                  }}
+                />
+                <ErrorMessage
+                  name="max_quantity"
+                  component="div"
+                  className="error"
+                />
+              </Grid>
+
+              <Grid item xs={12} lg={6}>
+                {/* Apply to Shipping Amount */}
+                <span style={{ color: "rgba(88, 89, 91, 1)" }}>
+                  Apply to Shipping Amount
+                </span>
+                <Field
+                  as="select"
+                  name="ship_charges"
+                  style={{
+                    padding: 10,
+                    width: "100%",
+                    borderRadius: 5,
+                    border: "1px solid",
+                    marginTop: 10,
+                  }}
+                >
+                  <option value="green">YES</option>
+                  <option value="blue">NO</option>
+                </Field>
+                <ErrorMessage
+                  name="ship_charges"
+                  component="div"
+                  className="error"
+                />
+              </Grid>
+
+              <Grid item xs={12} lg={6}>
+                {/* Free Shipping */}
+                <span style={{ color: "rgba(88, 89, 91, 1)" }}>
+                  Free Shipping
+                </span>
+                <Field
+                  as="select"
+                  name="free_shipping"
+                  style={{
+                    padding: 10,
+                    width: "100%",
+                    borderRadius: 5,
+                    border: "1px solid",
+                    marginTop: 10,
+                  }}
+                >
+                  <option value="green">For Shiping with Matching Item</option>
+                  <option value="blue">For Shiping with Matching Item</option>
+                </Field>
+                <ErrorMessage
+                  name="free_shipping"
+                  component="div"
+                  className="error"
+                />
+              </Grid>
+
+              <Grid item xs={12} lg={6}>
+                {/* Stop Further Rules Processing */}
+                <span style={{ color: "rgba(88, 89, 91, 1)" }}>
+                  Stop Further Rules Processing
+                </span>
+                <Field
+                  as="select"
+                  name="stop_processing"
+                  style={{
+                    padding: 10,
+                    width: "100%",
+                    borderRadius: 5,
+                    border: "1px solid",
+                    marginTop: 10,
+                  }}
+                >
+                  <option value="green">YES</option>
+                  <option value="blue">NO</option>
+                </Field>
+                <ErrorMessage
+                  name="stop_processing"
+                  component="div"
+                  className="error"
+                />
+              </Grid>
+
+              <Grid item xs={12} lg={6}>
+                {/* Add Reward Points */}
+                <span style={{ color: "rgba(88, 89, 91, 1)" }}>
+                  Add Reward Points
+                </span>
+                <Field
+                  name="reward_pts"
+                  type="text"
+                  style={{
+                    padding: 10,
+                    width: "100%",
+                    borderRadius: 5,
+                    border: "1px solid",
+                    marginTop: 10,
+                  }}
+                />
+                <ErrorMessage
+                  name="reward_pts"
+                  component="div"
+                  className="error"
+                />
+              </Grid>

@@ -1,6 +1,6 @@
 export const navigations = [
 	{ name: 'Dashboard', path: '/dashboard/default', icon: 'dashboard' },
-	{ name: 'Inventory Management', path: '/dashboard/inventory', icon: 'store' },
+	// { name: 'Inventory Management', path: '/dashboard/inventory', icon: 'store' },
 	{ label: 'Sections', type: 'label' },
 
 	{
@@ -26,7 +26,7 @@ export const navigations = [
 		icon: 'folder',
 		children: [
 			{ name: 'Order List', iconText: 'SI', path: '/dashboard/orderlist' },
-			{ name: 'View Order', iconText: 'SU', path: '/session/signup' }
+			// { name: 'View Order', iconText: 'SU', path: '/dashboard/orderdetails' }
 		]
 	},
 	{
@@ -35,7 +35,9 @@ export const navigations = [
 		children: [
 			{ name: 'Category List', iconText: 'SI', path: '/dashboard/categorylist' },
 			// { name: 'View Category', iconText: 'SU', path: '/session/signup' },
-			{ name: 'Add Category', iconText: 'SU', path: '/dashboard/addcategory' }
+			{ name: 'Add Category', iconText: 'SU', path: '/dashboard/addcategory' },
+			{ name: 'Add Sub Category', iconText: 'SC', path: '/dashboard/addsubcategory'}, 
+
 		]
 	},
 	{
@@ -52,6 +54,14 @@ export const navigations = [
 		children: [
 			{ name: 'FAQ List', iconText: 'SI', path: '/dashboard/faqlist' },
 			{ name: 'Add FAQ', iconText: 'SU', path: '/dashboard/addfaq' }
+		]
+	},
+	{
+		name: 'Static page',
+		icon: 'quiz',
+		children: [
+			{ name: 'Static page List', iconText: 'SI', path: '/dashboard/staticpagelist' },
+			{ name: 'Add Static page', iconText: 'SU', path: '/dashboard/addstaticpage' }
 		]
 	},
 	{

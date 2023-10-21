@@ -67,8 +67,8 @@ const DoughnutChart = ({ height, color = [] }) => {
             show: true,
             textStyle: {
               fontSize: '14',
-              fontWeight: 'normal'
-              // color: "rgba(15, 21, 77, 1)"
+              fontWeight: 'normal',
+              color: 'red'
             },
             formatter: '{b} \n{c} ({d}%)'
           }
@@ -105,7 +105,7 @@ const DoughnutChart = ({ height, color = [] }) => {
       style={{ height: height }}
       option={{
         ...option,
-        color: [...color]
+        color: ['red', 'orange', 'yellow']
       }}
     />
   );

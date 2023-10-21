@@ -45,8 +45,8 @@ const Analytics = () => {
 						<TopSellingTable />
 						<StatCards2 />
 
-						<H4>Ongoing Projects</H4>
-						<RowCards />
+						{/* <H4>Ongoing Projects</H4>
+						<RowCards /> */}
 					</Grid>
 
 					<Grid item lg={4} md={4} sm={12} xs={12}>
@@ -56,7 +56,8 @@ const Analytics = () => {
 
 							<DoughnutChart
 								height='300px'
-								color={[palette.primary.dark, palette.primary.main, palette.primary.light]}
+								color={['red']}
+								// color={[palette.warning.main, palette.warning.main, palette.warning.main]}
 							/>
 						</Card>
 

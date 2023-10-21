@@ -12,6 +12,7 @@ import CategoryRoutes from './views/category/CategoryRoutes';
 import BannerRoutes from './views/banner/BannerRoutes';
 import FAQRoutes from './views/faq/FAQRoutes';
 import CouponRoutes from './views/coupon/CouponRoutes';
+import StaticPagesRoutes from './views/staticPage/StaticPageRoutes';
 
 // session pages
 const NotFound = Loadable(lazy(() => import('app/views/sessions/NotFound')));
@@ -27,71 +28,72 @@ const Analytics = Loadable(lazy(() => import('app/views/dashboard/Analytics')));
 const Inventory = Loadable(lazy(() => import('app/views/dashboard/Inventory')));
 const PrivacyPolicySection = Loadable(lazy(() => import('app/views/privacy/PrivacyPolicySection')));
 const TermandConditionSection = Loadable(
-	lazy(() => import('app/views/termandcondition/TermandConditionSection'))
+  lazy(() => import('app/views/termandcondition/TermandConditionSection'))
 );
 const AboutusPage = Loadable(lazy(() => import('app/views/aboutus/AboutusPage')));
 
 const routes = [
-	{
-		element: (
-			<AuthGuard>
-				<MatxLayout />
-			</AuthGuard>
-		),
-		children: [
-			...materialRoutes,
-			// dashboard route
-			{
-				path: '/dashboard/default',
-				element: <Analytics />,
-				auth: authRoles.admin
-			},
-			{
-				path: '/dashboard/inventory',
-				element: <Inventory />,
-				auth: authRoles.admin
-			},
-			{
-				path: '/dashboard/privacy',
-				element: <PrivacyPolicySection />,
-				auth: authRoles.admin
-			},
-			{
-				path: '/dashboard/termcondition',
-				element: <TermandConditionSection />,
-				auth: authRoles.admin
-			},
-			,
-			{
-				path: '/dashboard/aboutus',
-				element: <AboutusPage />,
-				auth: authRoles.admin
-			},
+  {
+    element: (
+      // <AuthGuard>
+        <MatxLayout />
+      //  </AuthGuard>
+    ),
+    children: [
+      ...materialRoutes,
+      // dashboard route
+      {
+        path: '/dashboard/default',
+        element: <Analytics />,
+        auth: authRoles.admin
+      },
+      {
+        path: '/dashboard/inventory',
+        element: <Inventory />,
+        auth: authRoles.admin
+      },
+      {
+        path: '/dashboard/privacy',
+        element: <PrivacyPolicySection />,
+        auth: authRoles.admin
+      },
+      {
+        path: '/dashboard/termcondition',
+        element: <TermandConditionSection />,
+        auth: authRoles.admin
+      },
+      ,
+      {
+        path: '/dashboard/aboutus',
+        element: <AboutusPage />,
+        auth: authRoles.admin
+      },
 
-			// e-chart rooute
-			{
-				path: '/charts/echarts',
-				element: <AppEchart />,
-				auth: authRoles.editor
-			},
-			...CustomerRoutes,
-			...ProductRoutes,
-			...OrderRoutes,
-			...CategoryRoutes,
-			...BannerRoutes,
-			...FAQRoutes,
-			...CouponRoutes
-		]
-	},
+      // e-chart rooute
+      {
+        path: '/charts/echarts',
+        element: <AppEchart />,
+        auth: authRoles.editor
+      },
+      ...CustomerRoutes,
+      ...ProductRoutes,
+      ...OrderRoutes,
+      ...CategoryRoutes,
+      ...BannerRoutes,
+      ...FAQRoutes,
+      ...StaticPagesRoutes,
+      ...CouponRoutes
+    ]
+  },
 
-	// session pages route
-	{ path: '/session/404', element: <NotFound /> },
-	{ path: '/session/signin', element: <JwtLogin /> },
-	{ path: '/session/signup', element: <JwtRegister /> },
-	{ path: '/session/forgot-password', element: <ForgotPassword /> },
+  // session pages route
+  { path: '/session/404', element: <NotFound /> },
+  { path: '/session/signin', element: <JwtLogin /> },
+  { path: '/session/signup', element: <JwtRegister /> },
+  { path: '/session/forgot-password', element: <ForgotPassword /> },
 
-	{ path: '/', element: <Navigate to='dashboard/default' /> },
-	{ path: '*', element: <NotFound /> }
+  { path: '/', element: <Navigate to="session/signin" /> },
+  { path: '*', element: <NotFound /> }
 ];
 
 export default routes;

@@ -111,38 +111,46 @@ const Layout1Topbar = () => {
           </StyledIconButton>
 
           <IconBox>
-            <StyledIconButton>
+            {/* <StyledIconButton>
               <Icon>mail_outline</Icon>
-            </StyledIconButton>
+            </StyledIconButton> */}
 
-            <StyledIconButton>
+            {/* <StyledIconButton>
               <Icon>web_asset</Icon>
-            </StyledIconButton>
+            </StyledIconButton> */}
 
-            <StyledIconButton>
+            {/* <StyledIconButton>
               <Icon>star_outline</Icon>
-            </StyledIconButton>
+            </StyledIconButton> */}
           </IconBox>
         </Box>
 
         <Box display="flex" alignItems="center">
           <MatxSearchBox />
 
-          <NotificationProvider>
+          {/* <NotificationProvider>
             <NotificationBar />
-          </NotificationProvider>
+          </NotificationProvider> */}
 
-          <ShoppingCart />
+          {/* <ShoppingCart /> */}
 
           <MatxMenu
             menuButton={
               <UserMenu>
                 <Hidden xsDown>
                   <Span>
-                    Hi <strong>{user.name}</strong>
+                    Hi{' '}
+                    <strong>
+                      Welcome Admin
+                      {/* {user.name} */}
+                    </strong>
                   </Span>
                 </Hidden>
-                <Avatar src={user.avatar} sx={{ cursor: 'pointer' }} />
+                <Avatar
+                  src=""
+                  // {user.avatar}
+                  sx={{ cursor: 'pointer' }}
+                />
               </UserMenu>
             }
           >
@@ -165,7 +173,13 @@ const Layout1Topbar = () => {
               <Span> Settings </Span>
             </StyledItem>
 
-            <StyledItem onClick={logout}>
+            <StyledItem onClick={(e)=>{
+              e.preventDefault()
+              localStorage.removeItem('token')
+              setTimeout(() => {
+                window.location.href='/'
+              }, 2000);
+            }}>
               <Icon> power_settings_new </Icon>
               <Span> Logout </Span>
             </StyledItem>

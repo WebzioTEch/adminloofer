@@ -1,0 +1,22 @@
+.MuiButtonBase-root {
+  color: black !important;
+}
+
+/* Set text color to black for elements with the has-submenu class */
+.has-submenu {
+  color: black !important;
+}
+
+/* Set text color to black for elements with the compactNavItem class */
+.compactNavItem {
+  color: black !important;
+}
+
+/* Set text color to black for elements with the css-1bbam8m-MuiButtonBase-root class */
+.css-1bbam8m-MuiButtonBase-root {
+  color: black !important;
+}
+
+.nav-bullet.css-1k5ran5 {
+  background-color: black !important;
+}

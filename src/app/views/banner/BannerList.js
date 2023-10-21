@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Divider } from '@mui/material';
+import {Box, Divider } from '@mui/material';
 import BannerTable from 'app/form/BannerTable';
 
 const BannerList = () => {

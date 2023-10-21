@@ -5,35 +5,36 @@ import useSettings from 'app/hooks/useSettings';
 import { Span } from './Typography';
 
 const BrandRoot = styled(Box)(() => ({
-	display: 'flex',
-	alignItems: 'center',
-	justifyContent: 'space-between',
-	padding: '20px 18px 20px 29px'
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  padding: '20px 18px 20px 29px',
+  background: 'white'
 }));
 
 const StyledSpan = styled(Span)(({ mode }) => ({
-	fontSize: 18,
-	marginLeft: '.5rem',
-	display: mode === 'compact' ? 'none' : 'block'
+  fontSize: 18,
+  marginLeft: '.5rem',
+  display: mode === 'compact' ? 'none' : 'block'
 }));
 
 const Brand = ({ children }) => {
-	const { settings } = useSettings();
-	const leftSidebar = settings.layout1Settings.leftSidebar;
-	const { mode } = leftSidebar;
+  const { settings } = useSettings();
+  const leftSidebar = settings.layout1Settings.leftSidebar;
+  const { mode } = leftSidebar;
 
-	return (
-		<BrandRoot>
-			<Box display='flex' alignItems='center'>
-				{/* <MatxLogo /> */}
-				<img src={logo} style={{ height: 25, width: '150px' }} />
-			</Box>
+  return (
+    <BrandRoot>
+      <Box display="flex" alignItems="center">
+        {/* <MatxLogo /> */}
+        <img src={logo} style={{ height: 25, width: '150px' }} />
+      </Box>
 
-			<Box className='sidenavHoverShow' sx={{ display: mode === 'compact' ? 'none' : 'block' }}>
-				{children || null}
-			</Box>
-		</BrandRoot>
-	);
+      {/* <Box className="sidenavHoverShow" sx={{ display: mode === 'compact' ? 'none' : 'block' }}>
+        {children || null}
+      </Box> */}
+    </BrandRoot>
+  );
 };
 
 export default Brand;

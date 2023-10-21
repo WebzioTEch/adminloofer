@@ -1,64 +1,111 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
+import { useDispatch, useSelector } from 'react-redux';
+import { showCustomerDispatch } from 'reducers/HomeReducer';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { useState } from 'react';
 
 const columns = [
 	{ field: 'id', headerName: 'ID', width: 90 },
 	{
-		field: 'firstName',
-		headerName: 'First name',
+		field: 'name',
+		headerName: 'Name',
 		width: 150,
 		editable: true
 	},
 	{
-		field: 'lastName',
-		headerName: 'Last name',
+		field: 'email',
+		headerName: 'Email',
 		width: 150,
 		editable: true
 	},
 	{
-		field: 'age',
-		headerName: 'Age',
+		field: 'created_at',
+		headerName: 'Created At',
 		type: 'number',
 		width: 110,
 		editable: true
 	},
-	{
-		field: 'fullName',
-		headerName: 'Full name',
-		description: 'This column has a value getter and is not sortable.',
-		sortable: false,
-		width: 160,
-		valueGetter: (params) => `${params.row.firstName || ''} ${params.row.lastName || ''}`
-	}
 ];
 
 const rows = [
-	{ id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-	{ id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-	{ id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-	{ id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-	{ id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-	{ id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-	{ id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-	{ id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-	{ id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 }
+	{ id: 1, name: 'Snow', email: 'Jon', created_at: 35 },
 ];
 
 export default function DataGridD() {
+
+	const initialEditedData = {};
+	const dispatch = useDispatch(); 
+	const [customerInfo,setCustomerInfo] = useState([])
+
+	useEffect(()=>{
+		console.log(localStorage.getItem("token"),"customer token")
+		// dispatch(showCustomerDispatch());
+		const config = {
+			headers: {
+				'Content-Type': 'multipart/form-data',
+				'Authorization': `Bearer ${localStorage.getItem("token")}`
+			}
+		};
+
+			fetch('https://loofer.bellazza.in/api/admin/all_users',{
+				headers: {
+					'Authorization': `Bearer ${localStorage.getItem("token")}`
+				}
+			}).then(response => response.json())
+				.then(res => {
+					console.log(res,'res reeees')
+					let customer=[];
+					if(res){
+					res.users.map((val)=>{
+						customer.push(val)
+					})
+					setCustomerInfo(customer);
+
+					console.log({res});
+				}
+				}).catch(err => {
+					console.error({err});
+				});
+			
+
+	},[])
+
+	const mapCategoryDataToRows = (data) => {
+		console.log(data, 'data');
+		if (data && Array.isArray(data) && data.length > 0) {
+		  return data.map((category) => ({
+			id: category?.id||Math.floor(new Date().getTime()),
+			name: category?.name,
+			email: category?.email,
+			
+			created_at: new Date(category.created_at).toDateString(),
+			// Map other properties as needed
+		  }));
+		} else {
+		  return [
+			{ id: 1, name: 'Snow', email: 'Jon', created_at:""},
+		  ];
+		}
+	  };
+	var rows = mapCategoryDataToRows(customerInfo);
 	return (
 		<Box sx={{ height: 400, width: '100%' }}>
+			{/* {console.log(customerInfo,'customerInfo')} */}
 			<DataGrid
-				rows={rows}
+				rows={customerInfo.length ? customerInfo : rows}
 				columns={columns}
-				initialState={{
-					pagination: {
-						paginationModel: {
-							pageSize: 5
-						}
-					}
-				}}
-				pageSizeOptions={[5]}
+				getRowId={(row) => row.id || 2 }
+				// initialState={{
+				// 	pagination: {
+				// 		paginationModel: {
+				// 			pageSize: 5
+				// 		}
+				// 	}
+				// }}
+				// pageSizeOptions={[5]}
 				checkboxSelection
 				disableRowSelectionOnClick
 			/>

@@ -1,61 +1,66 @@
 {
-	"name": "matx-react",
-	"version": "3.1.0",
-	"private": true,
-	"scripts": {
-		"start": "react-scripts start",
-		"build": "react-scripts build",
-		"test": "react-scripts test",
-		"eject": "react-scripts eject",
-		"ghp": "react-scripts build && gh-pages -d build"
-	},
-	"eslintConfig": {
-		"extends": "react-app"
-	},
-	"browserslist": [
-		">0.2%",
-		"not dead",
-		"not ie <= 11",
-		"not op_mini all"
-	],
-	"dependencies": {
-		"@auth0/auth0-spa-js": "^2.0.4",
-		"@emotion/react": "^11.10.6",
-		"@emotion/styled": "^11.10.6",
-		"@mui/icoscns-material": "^5.11.11",
-		"@mui/lascb": "^5.0.0-alpha.123",
-		"@mui/cscmaterial": "^5.11.13",
-		"@mu i/x-data-grid": "^6.11.2",
-		"@redcsuxjs/toolkit": "^1.9.5",
-		"autos csuggest-highlight": "^3.3.4",
-		"axios": "1.1.3",
-		"clsx": "^1.2.1",
-		"date-fns": "^2.29.3",
-		"echarts": "^5.4.1",
-		"echarts-for-react": "^3.0.2",
-		"formik": "^2.2.9",
-		"lodash": "^4.17.21",
-		"notistack": "^3.0.1",
-		"prop-types": "^15.8.1",
-		"react": "^18.2.0",
-		"react-dom": "^18.2.0",
-		"react-mcsaterial-ui-form-validator": "^3.0.1",
-		"react-pescrfect-scrollbar": "^1.5.8",
-		"react-qucsill": "^2.0.0",
-		"react-rescdux": "^8.1.2",
-		"react-roscuter-dom": "^6.9.0",
-		"react-scrscipts": "^5.0.1",
-		"redux": "^4.2.1",
-		"shocsrtid": "^2.2.16",
-		"yup": "^1.0.2"
-	},
-	"devDependencies": {
-		"@babel/runtime": "^7.21.0",
-		"axios-mock-adapter": "^1.21.2",
-		"babel-plugin-import": "^1.13.6",
-		"cross-env": "^7.0.3",
-		"customize-cra": "^1.0.0",
-		"gh-pages": "^5.0.0",
-		"react-app-rewired": "^2.2.1"
-	}
+  "proxy": "https://loofer.bellazza.in",
+  "name": "matx-react",
+  "version": "3.1.0",
+  "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "ghp": "react-scripts build && gh-pages -d build"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "dependencies": {
+    "@auth0/auth0-spa-js": "^2.0.4",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@material-ui/core": "^4.12.4",
+    "@mui/icons-material": "^5.11.11",
+    "@mui/lab": "^5.0.0-alpha.123",
+    "@mui/material": "^5.14.11",
+    "@mui/x-data-grid": "^6.16.2",
+    "@reduxjs/toolkit": "^1.9.5",
+    "autosuggest-highlight": "^3.3.4",
+    "axios": "1.1.3",
+    "bootstrap": "^5.3.2",
+    "clsx": "^1.2.1",
+    "date-fns": "^2.29.3",
+    "echarts": "^5.4.1",
+    "echarts-for-react": "^3.0.2",
+    "formik": "^2.2.9",
+    "lodash": "^4.17.21",
+    "mdb-react-ui-kit": "^6.3.0",
+    "notistack": "^3.0.1",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.9.0",
+    "react-dom": "^18.2.0",
+    "react-material-ui-form-validator": "^3.0.1",
+    "react-perfect-scrollbar": "^1.5.8",
+    "react-quill": "^2.0.0",
+    "react-redux": "^8.1.2",
+    "react-router-dom": "^6.9.0",
+    "react-scripts": "^5.0.1",
+    "shortid": "^2.2.16",
+    "sweetalert2": "^11.7.32",
+    "yup": "^1.0.2"
+  },
+  "devDependencies": {
+    "@babel/runtime": "^7.21.0",
+    "axios-mock-adapter": "^1.21.2",
+    "babel-plugin-import": "^1.13.6",
+    "cross-env": "^7.0.3",
+    "customize-cra": "^1.0.0",
+    "gh-pages": "^5.0.0",
+    "react-app-rewired": "^2.2.1"
+  }
 }

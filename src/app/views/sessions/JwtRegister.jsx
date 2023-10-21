@@ -4,9 +4,11 @@ import { Card, Checkbox, Grid, TextField } from '@mui/material';
 import { Box, styled } from '@mui/material';
 import { Paragraph } from 'app/components/Typography';
 import useAuth from 'app/hooks/useAuth';
+import { useDispatch } from "react-redux";
 import { Formik } from 'formik';
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { registerDispatch } from 'reducers/HomeReducer';
 import * as Yup from 'yup';
 
 const FlexBox = styled(Box)(() => ({ display: 'flex', alignItems: 'center' }));
@@ -37,6 +39,9 @@ const initialValues = {
   email: '',
   password: '',
   username: '',
+  name: '',
+  mobile: '',
+
   remember: true
 };
 
@@ -53,12 +58,15 @@ const JwtRegister = () => {
   const { register } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const handleFormSubmit = (values) => {
     setLoading(true);
-
+    
     try {
-      register(values.email, values.username, values.password);
+    var data={"email":values.email, "username":values.username, "password":values.password,"name":values.name,"mobile":values.mobile};
+      dispatch(registerDispatch(data, setLoading, navigate));
+      console.log(values.email, values.username, values.password);
       navigate('/');
       setLoading(false);
     } catch (e) {
@@ -102,6 +110,34 @@ const JwtRegister = () => {
                       onChange={handleChange}
                       helperText={touched.username && errors.username}
                       error={Boolean(errors.username && touched.username)}
+                      sx={{ mb: 3 }}
+                    />
+                    <TextField
+                      fullWidth
+                      size="small"
+                      type="text"
+                      name="name"
+                      label="Name"
+                      variant="outlined"
+                      onBlur={handleBlur}
+                      value={values.name}
+                      onChange={handleChange}
+                      helperText={touched.name && errors.name}
+                      error={Boolean(errors.name && touched.name)}
+                      sx={{ mb: 3 }}
+                    />
+                    <TextField
+                      fullWidth
+                      size="small"
+                      
+                      name="mobile"
+                      label="Mobile"
+                      variant="outlined"
+                      onBlur={handleBlur}
+                      value={values.mobile}
+                      onChange={handleChange}
+                      helperText={touched.mobile && errors.mobile}
+                      error={Boolean(errors.mobile && touched.mobile)}
                       sx={{ mb: 3 }}
                     />
 

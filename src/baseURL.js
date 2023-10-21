@@ -1,0 +1,1 @@
+module.exports.baseURL="https://loofer.bellazza.in/api/";

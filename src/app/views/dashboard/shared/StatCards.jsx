@@ -8,7 +8,7 @@ const StyledCard = styled(Card)(({ theme }) => ({
   justifyContent: 'space-between',
   padding: '24px !important',
   background: theme.palette.background.paper,
-  [theme.breakpoints.down('sm')]: { padding: '16px !important' },
+  [theme.breakpoints.down('sm')]: { padding: '16px !important' }
 }));
 
 const ContentBox = styled(Box)(({ theme }) => ({
@@ -16,7 +16,7 @@ const ContentBox = styled(Box)(({ theme }) => ({
   flexWrap: 'wrap',
   alignItems: 'center',
   '& small': { color: theme.palette.text.secondary },
-  '& .icon': { opacity: 0.6, fontSize: '44px', color: theme.palette.primary.main },
+  '& .icon': { opacity: 0.6, fontSize: '44px', color: theme.palette.primary.main }
 }));
 
 const Heading = styled('h6')(({ theme }) => ({
@@ -24,15 +24,15 @@ const Heading = styled('h6')(({ theme }) => ({
   marginTop: '4px',
   fontSize: '14px',
   fontWeight: '500',
-  color: theme.palette.primary.main,
+  color: theme.palette.primary.main
 }));
 
 const StatCards = () => {
   const cardList = [
-    { name: 'New Leads', amount: 3050, icon: 'group' },
-    { name: 'This week Sales', amount: '$80,500', icon: 'attach_money' },
-    { name: 'Inventory Status', amount: '8.5% Stock Surplus', icon: 'store' },
-    { name: 'Orders to deliver', amount: '305 Orders', icon: 'shopping_cart' },
+    { name: `Today's Sales`, amount: 0, icon: 'payment' , link:""},
+    { name: `Total Sales`, amount: '₹0', icon: 'money' },
+    { name: `Today's Revenue`, amount: '₹0', icon: 'payments' },
+    { name: `Total Revenue`, amount: '₹0', icon: 'currency_rupee' }
   ];
 
   return (
@@ -41,10 +41,12 @@ const StatCards = () => {
         <Grid item xs={12} md={6} key={index}>
           <StyledCard elevation={6}>
             <ContentBox>
-              <Icon className="icon">{item.icon}</Icon>
+              <Icon className="icon" style={{ color: 'red' }}>
+                {item.icon}
+              </Icon>
               <Box ml="12px">
                 <Small>{item.name}</Small>
-                <Heading>{item.amount}</Heading>
+                <Heading style={{ color: 'red' }}>{item.amount}</Heading>
               </Box>
             </ContentBox>
 
