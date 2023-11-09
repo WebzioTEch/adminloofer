@@ -17,7 +17,7 @@ import {
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
-const AddCategoryForm = () => {
+const AddCollectionForm = () => {
   const Navigate =useNavigate();
   const [dataArray, setDataArray] = useState(
     JSON.parse(String(localStorage.getItem("category_list"))) || []
@@ -116,7 +116,7 @@ const AddCategoryForm = () => {
                   background: "white",
                 }}
               >
-                <h2>Add New Category</h2>
+                <h2>Add New Collection</h2>
                 <Divider style={{ marginTop: 20, marginBottom: 20 }} />
                 <Grid container style={{ padding: 10 }} spacing={4}>
                   <Grid item xs={12} lg={6}>
@@ -301,4 +301,4 @@ const AddCategoryForm = () => {
     </Formik>
   );
 };
-export default AddCategoryForm;
+export default AddCollectionForm;

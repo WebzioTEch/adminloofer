@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const ProfileForm = () => {
+  const Navigate =useNavigate();
   const dispatch = useDispatch();
   const [selectedFile, setSelectedFile] = useState(null);
   const [dataArray, setDataArray] = useState(
@@ -18,6 +19,8 @@ const ProfileForm = () => {
   );
   const token = useSelector((state) => state.home.token);
   const [img, setImageData] = useState(null);
+  const [attributes, setAttributes] = useState([]);
+
   const [successMessage, setSuccessMessage] = useState("");
   const [formData, setFormData] = useState({
     name: "",
@@ -89,6 +92,15 @@ const ProfileForm = () => {
         .then((res) => {
           if(res.status==200){
             setSuccessMessage("Product added successfully");
+            Swal.fire({
+              title: "Product Status",
+              text: "Product added successfully",
+              icon: "success",
+              });
+              setTimeout(() => {
+                Navigate("/dashboard/productlist")
+              }, 1000);
+            
           }else{
             Swal.fire({
               title: "Product Status",
@@ -149,6 +161,31 @@ const ProfileForm = () => {
       } else {
         Swal.fire({
           title: "Category Status",
+          text: "You are not authorized as admin",
+          icon: "error",
+        });
+      }
+    })
+    .catch((err) => {
+      console.error({ err });
+    });
+
+
+    fetch(`https://loofer.bellazza.in/api/admin/get_all_attributes`, config)
+    .then((response) => response.json())
+    .then((res) => {
+      console.log(res, "res reeees");
+      let product = [];
+      if (res) {
+        res.map((val) => {
+          product.push(val);
+        });
+        setAttributes(product);
+
+        console.log({ res });
+      } else {
+        Swal.fire({
+          title: "Attribute Status",
           text: "You are not authorized as admin",
           icon: "error",
         });
@@ -257,6 +294,8 @@ const ProfileForm = () => {
                   <Grid item xs={12} lg={6}>
                     <Field
                       name="description"
+                      as="textarea"
+                      rows="10"
                       type="text"
                       placeholder="description"
                       style={{
@@ -318,7 +357,7 @@ const ProfileForm = () => {
                     >
                     <option value=''></option>
                       
-                    <option value='1'>XL</option>
+                    <option value='4'>XL</option>
                   
                      
                       

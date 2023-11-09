@@ -13,6 +13,9 @@ import BannerRoutes from './views/banner/BannerRoutes';
 import FAQRoutes from './views/faq/FAQRoutes';
 import CouponRoutes from './views/coupon/CouponRoutes';
 import StaticPagesRoutes from './views/staticPage/StaticPageRoutes';
+import AddListShopForm from './form/AddListShop';
+import AddCollectionForm from './form/AddCollection';
+import ListShopTable from './form/ListShop';
 
 // session pages
 const NotFound = Loadable(lazy(() => import('app/views/sessions/NotFound')));
@@ -68,6 +71,23 @@ const routes = [
         element: <AboutusPage />,
         auth: authRoles.admin
       },
+      {
+        path: '/dashboard/add-list-shop',
+        element: <AddListShopForm />,
+        auth: authRoles.admin
+      },
+
+      {
+        path: '/dashboard/add-list-shop-list',
+        element: <ListShopTable />,
+        auth: authRoles.admin
+      },
+
+      {
+        path: '/dashboard/add-collection',
+        element: <AddCollectionForm />,
+        auth: authRoles.admin
+      },
 
       // e-chart rooute
       {
@@ -91,6 +111,7 @@ const routes = [
   { path: '/session/signin', element: <JwtLogin /> },
   { path: '/session/signup', element: <JwtRegister /> },
   { path: '/session/forgot-password', element: <ForgotPassword /> },
+
 
   { path: '/', element: <Navigate to="session/signin" /> },
   { path: '*', element: <NotFound /> }

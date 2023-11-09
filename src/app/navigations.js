@@ -36,7 +36,29 @@ export const navigations = [
 			{ name: 'Category List', iconText: 'SI', path: '/dashboard/categorylist' },
 			// { name: 'View Category', iconText: 'SU', path: '/session/signup' },
 			{ name: 'Add Category', iconText: 'SU', path: '/dashboard/addcategory' },
-			{ name: 'Add Sub Category', iconText: 'SC', path: '/dashboard/addsubcategory'}, 
+			// { name: 'Add Sub Category', iconText: 'SC', path: '/dashboard/addsubcategory'}, 
+
+		]
+	},
+	{
+		name: 'Collection',
+		icon: 'category',
+		children: [
+			{ name: 'Collection List', iconText: 'SI', path: '/dashboard/add-collection-list' },
+			// { name: 'View Category', iconText: 'SU', path: '/session/signup' },
+			{ name: 'Add Collection', iconText: 'SU', path: '/dashboard/add-collection' },
+			// { name: 'Add Sub Category', iconText: 'SC', path: '/dashboard/addsubcategory'}, 
+
+		]
+	},
+	{
+		name: 'List Shop',
+		icon: 'category',
+		children: [
+			{ name: 'Shop List', iconText: 'SI', path: '/dashboard/add-list-shop-list' },
+			// { name: 'View Category', iconText: 'SU', path: '/session/signup' },
+			{ name: 'Add Shop', iconText: 'SU', path: '/dashboard/add-list-shop' },
+			// { name: 'Add Sub Category', iconText: 'SC', path: '/dashboard/addsubcategory'}, 
 
 		]
 	},

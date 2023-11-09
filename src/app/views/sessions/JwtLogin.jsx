@@ -62,9 +62,9 @@ const JwtLogin = () => {
   const { login } = useAuth();
 
   useEffect(() => {
-   if(localStorage.getItem('token')){
-    navigate("/dashboard/default")
-   }
+  //  if(localStorage.getItem('token')){
+  //   navigate("/dashboard/default")
+  //  }
   });
   const handleFormSubmit = (email,password) => {
     setLoading(true);
