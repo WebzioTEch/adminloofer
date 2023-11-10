@@ -104,12 +104,15 @@ export default function ProductTable() {
       width: 100,
       sortable: false,
       renderCell: (params) => (
+        <>
+        {/* {console.log('ghfggf', params)} */}
         <React.Fragment>
           <GridDeleteIcon
-            onClick={() => handleDelete(params.row.id)}
+            onClick={() => handleDelete(params.id)}
             style={{ cursor: "pointer" }}
           />
         </React.Fragment>
+        </>
       ),
     },
     //   {
@@ -129,7 +132,7 @@ export default function ProductTable() {
   const ID = "7";
 
   const handleDelete = (idToDelete) => {
-    dispatch(deleteproductDispatch(ID));
+    dispatch(deleteproductDispatch(idToDelete));
     console.log(`Delete row with ID: ${idToDelete}`);
     fatchData();
   };
@@ -215,6 +218,7 @@ export default function ProductTable() {
         description: category?.description,
         image_url: category.image_url,
         sku: category.sku,
+        actions:category.id
         // Map other properties as needed
       }));
     } else {

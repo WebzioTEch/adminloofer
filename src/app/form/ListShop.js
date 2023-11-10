@@ -132,22 +132,21 @@ export default function ListShopTable() {
 					style={{ marginLeft: 10 }}
 					onClick={(event) => {
 					  const config = {
-						method: 'POST',
 						headers: {
-						  "Content-Type": "multipart/form-data",
+						//   "Content-Type": "multipart/form-data",
 						  Authorization: `Bearer ${localStorage.getItem("token")}`,
 						},
-                        body:JSON.stringify({id:cellValues.id})
+                     
 					  };
 				  
-					  fetch("https://loofer.bellazza.in/api/admin/delete-shop-event",  config).then(response => response.json())
+					  axios.post("https://loofer.bellazza.in/api/admin/delete-shop-event", {"shop_event_id":cellValues.id}, config)
 					  .then((res) => {
 						  console.log(res)
 						  let product = [];
-						  if (res) {
+						  if (res.data.status) {
 							Swal.fire({
 							  title: "Shop Status",
-							  text: "Delete Banner",
+							  text: "Delete shop",
 							  icon: "success",
 							  });
 							  fatchData();	
@@ -157,6 +156,7 @@ export default function ListShopTable() {
 							  text: "You are not authorized as admin",
 							  icon: "error",
 							  });
+							  fatchData();
 						  }
 				  
 						  console.log({ res });
@@ -173,6 +173,8 @@ export default function ListShopTable() {
 	
 	  
 	return (
+		<>
+		<div className='container' style={{margin: "20px"}}>
 		<Box sx={{ height: 400, width: '100%' }}>
 			<DataGrid
 		
@@ -191,5 +193,8 @@ export default function ListShopTable() {
 				disableRowSelectionOnClick
 			/>
 		</Box>
+		</div>
+		</>
+		
 	);
 }

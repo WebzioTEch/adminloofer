@@ -527,7 +527,7 @@ export const createListShopDispatch = (bodyData) => async (dispatch) => {
           text: "Shop List saved",
           icon: "success",
         }).then(() => {
-			// window.location.href="/dashboard/categorylist"
+			window.location.href="/dashboard/add-list-shop-list"
 		});
       } else if (data.status === 422) {
         return data.json().then((responseData) => {
@@ -554,6 +554,57 @@ export const createListShopDispatch = (bodyData) => async (dispatch) => {
     );
   }
 };
+
+
+export const createCollectionDispatch = (bodyData) => async (dispatch) => {
+  try {
+    //dispatch(createCategory());
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: bodyData,
+    };
+    console.log("body is this", bodyData);
+
+    fetch(`${baseURL}admin/add-collection`, requestOptions).then((data) => {
+      console.log("data", data);
+      if (data.status == 200) {
+        Swal.fire({
+          title: "Collection Status",
+          text: "Collection saved",
+          icon: "success",
+        }).then(() => {
+			window.location.href="/dashboard/add-collection-list"
+		});
+      } else if (data.status === 422) {
+        return data.json().then((responseData) => {
+          console.log("error reported", responseData.data.errors);
+          Swal.fire({
+            title: "Collection Status",
+            text: responseData.data.errors,
+            icon: "error",
+          });
+          throw new Error(responseData.message);
+        });
+      }
+      dispatch(createCategorySuccess(data));
+    });
+
+    // setLoading(false);
+  } catch (error) {
+    dispatch(
+      createCategoryFail(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+      )
+    );
+  }
+};
+
+
 
 export const { categoryRequest, categorySuccess, categoryFail } = actions;
 

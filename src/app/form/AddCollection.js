@@ -2,7 +2,8 @@ import React from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup"; // Import Yup for validation
 import { Grid, Box, Button, Divider } from "@mui/material";
-import { createCategoryDispatch } from "reducers/HomeReducer";
+import { createCategoryDispatch , createListShopDispatch
+, createCollectionDispatch} from "reducers/HomeReducer";
 import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { SwapCalls } from "@mui/icons-material";
@@ -31,22 +32,20 @@ const AddCollectionForm = () => {
 
   const handleFormSubmit = (values, index) => {
     const formData = new FormData();
-    formData.append("name", values.name);
-    formData.append("slug", values.slug);
-    formData.append("description", values.description);
-    formData.append("parent_id", values.parent_id);
+    formData.append("title", values.title);
+    formData.append("url", values.url);
+  
     formData.append("image", values.image);
     // formData.append("sub_parent_id", values.sub_parent_id);
 
-    dispatch(createCategoryDispatch(formData));
+    dispatch(createCollectionDispatch(formData));
     console.log(values);
   };
 
   // Define validation schema using Yup
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required("Name is required"),
-    slug: Yup.string().required("Slug is required"),
-    description: Yup.string().required("Description is required"),
+    title: Yup.string().required("Title is required"),
+    url: Yup.string().required("Url is required"),
 
     image: Yup.string().required("Image URL is required"),
     // .url('Invalid URL')
@@ -87,10 +86,9 @@ const AddCollectionForm = () => {
   return (
     <Formik
       initialValues={{
-        name: "",
-        slug: "",
-        description: "",
-        parent_id: "",
+        title: "",
+        url: "",
+       
         image: "",
         // sub_parent_id:""
       }}
@@ -121,14 +119,14 @@ const AddCollectionForm = () => {
                 <Grid container style={{ padding: 10 }} spacing={4}>
                   <Grid item xs={12} lg={6}>
                     <Field
-                      name="name"
+                      name="title"
                       type="text"
-                      placeholder="Name"
+                      placeholder="Title"
                       style={{
                         padding: 10,
                         width: "100%",
                         borderRadius: 5,
-                        border: errors.name ? "2px solid red" : "1px solid",
+                        border: errors.title ? "2px solid red" : "1px solid",
                         marginTop: 10,
                       }}
                       inputProps={{
@@ -138,15 +136,15 @@ const AddCollectionForm = () => {
                     <br />
                     {errors.name ? (
                       <span style={{ color: "red", fontSize: 12 }}>
-                        {errors.name}
+                        {errors.title}
                       </span>
                     ) : null}
                   </Grid>
                   <Grid item xs={12} lg={6}>
                     <Field
-                      name="slug"
+                      name="url"
                       type="text"
-                      placeholder="Slug"
+                      placeholder="https:// or http://"
                       style={{
                         padding: 10,
                         width: "100%",
@@ -165,61 +163,7 @@ const AddCollectionForm = () => {
                       </span>
                     ) : null}
                   </Grid>
-                  <Grid item xs={12} lg={6}>
-                    <Field
-                      name="description"
-                      type="text"
-                      as="textarea"
-                      rows="10"
-                      placeholder="Description"
-                      style={{
-                        padding: 10,
-                        width: "100%",
-                        borderRadius: 5,
-                        border: errors.description
-                          ? "2px solid red"
-                          : "1px solid",
-                        marginTop: 10,
-                      }}
-                      inputProps={{
-                        style: { padding: 12 },
-                      }}
-                    />
-                    <br />
-                    {errors.description ? (
-                      <span style={{ color: "red", fontSize: 12 }}>
-                        {errors.description}
-                      </span>
-                    ) : null}
-                  </Grid>
-                  <Grid item xs={12} lg={6}>
-                    <InputLabel htmlFor="parent_id">Parent ID</InputLabel>
-                    <Field
-                      as={Select}
-                      style={{
-                        padding: 5,
-                        width: "100%",
-                        borderRadius: 5,
-                        border: errors.description
-                          ? "2px solid red"
-                          : "1px solid",
-                        marginTop: 5,
-                      }}
-                      name="parent_id"
-                      label="Parent ID"
-                      error={errors.parent_id ? true : false}
-                    >
-                      {dataArray.map((count) => {
-                        return (
-                          <MenuItem value={count.id}>
-                            <em>{count.name} {count.parent? (
-                              <span>({count.parent.name})</span>
-                            ):''} </em>
-                          </MenuItem>
-                        );
-                      })}
-                    </Field>
-                  </Grid>
+                 
                   {/* <Grid item xs={12} lg={6}>
                     <Field
                       name="sub_parent_id"

@@ -9,6 +9,8 @@ import { values } from "lodash";
 
 const AddBannerForm = () => {
   const [description, setDescription] = useState("");
+  const [file, setFile] = useState(null);
+
   const [bannerArray, setBannerArray] = useState(
     JSON.parse(String(localStorage.getItem("editBanner"))) || null
   );
@@ -20,6 +22,9 @@ const AddBannerForm = () => {
   const handleFormSubmit = (values, index) => {
     formData.append("description", values.description);
     formData.append("url",  values.url);
+    if(file){
+      formData.append("image", file);
+    }
 
 
     if (bannerArray) {
@@ -73,7 +78,7 @@ const AddBannerForm = () => {
     //       console.error({ err });
     //     });
     // } else {
-      fetch("https://loofer.bellazza.in/api/admin/banners", config)
+      fetch("https://loofer.bellazza.in/api/admin/banners",config)
         .then((res) => {
           console.log(res);
 
@@ -83,6 +88,7 @@ const AddBannerForm = () => {
               text: "You can close this window",
               icon: "success",
             });
+            window.location.href="/dashboard/bannerlist"
           } else {
             Swal.fire({
               title: "Banner Status",
@@ -109,12 +115,15 @@ const AddBannerForm = () => {
 
     const fileToUpload = event.target.files[0];
     console.log("fileToUpload", fileToUpload)
+    setFile(fileToUpload)
+   
 
     //  setCoverPath(URL.createObjectURL(fileToUpload[0]));
     // const response = await convertImage(URL.createObjectURL(fileToUpload[0]));
     // setUploadCover(`data:${fileToUpload['0'].type};base64,` + response);
 
-    formData.append("image", fileToUpload);
+    // formData.append("image", fileToUpload);
+     setDescription(fileToUpload?.name)
   };
 
   return (
@@ -175,7 +184,8 @@ const AddBannerForm = () => {
                               fontWeight: 600,
                             }}
                           >
-                            Drag and drop or
+                            {description? description:"Drag and drop or"}
+                            
                           </span>
                           <span
                             style={{
@@ -225,7 +235,7 @@ const AddBannerForm = () => {
                     <Field
                       name="url"
                       type="text"
-                      placeholder="Url"
+                      placeholder="https:// or http://"
                       style={{
                         padding: 10,
                         width: "100%",

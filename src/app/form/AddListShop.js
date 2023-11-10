@@ -143,7 +143,7 @@ const AddListShopForm = () => {
                     <Field
                       name="url"
                       type="text"
-                      placeholder="Url"
+                      placeholder="https:// or http://"
                       style={{
                         padding: 10,
                         width: "100%",

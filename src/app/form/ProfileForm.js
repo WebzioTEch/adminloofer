@@ -61,32 +61,35 @@ const ProfileForm = () => {
       setSuccessMessage("");
     }, 2000);
     try {
-      let img = values.features_image;
+      // let img = values.features_image;
       console.log(img, "img");
       const formData = new FormData();
       formData.append("name", values.name);
-      formData.append("product_type", values.product_type);
+      formData.append("product_type", 1);
       formData.append("description", values.description);
       formData.append("price", values.price);
       formData.append("offer_price", values.offer_price);
       formData.append("category_id[]", values.category_id);
 
-      formData.append("features_image", values.features_image);
+      formData.append("features_image", img);
       formData.append("stock", values.stock);
+      formData.append("size", "L");
+
       formData.append("attribute_value_id[]", values.size);
 
 
 
       const config = {
-        method:'POST',
+        // method:'POST',
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: formData
+        // body: formData
       };
 
-      fetch(
+      axios.post(
           "https://loofer.bellazza.in/api/admin/product_create",
+          formData,
           config
         )
         .then((res) => {
@@ -133,7 +136,6 @@ const ProfileForm = () => {
     offer_price: Yup.number().required("offer_price is required"),
     quantity: Yup.number().required("quantity is required"),
     category_id: Yup.number().required("category_id is required"),
-    features_image: Yup.mixed().required("features_image is required"),
   });
 
 
@@ -177,8 +179,11 @@ const ProfileForm = () => {
       console.log(res, "res reeees");
       let product = [];
       if (res) {
-        res.map((val) => {
-          product.push(val);
+        res.data.map((val) => {
+          if(val?.type=="size"){
+            product.push(val);
+          }
+         
         });
         setAttributes(product);
 
@@ -341,6 +346,7 @@ const ProfileForm = () => {
                       style={{ color: "red", fontSize: 12 }}
                     />
                   </Grid>
+                  {console.log('attributes', attributes)}
                  <Grid item xs={12} lg={6}>
                     <Field
                       name="size"
@@ -357,7 +363,17 @@ const ProfileForm = () => {
                     >
                     <option value=''></option>
                       
-                    <option value='4'>XL</option>
+                    {/* <option value='4'>XL</option> */}
+               
+                    
+                     
+                      {attributes.map((map)=>{
+                       
+                       return <option value={map?.id}>{map?.name}</option>
+                          
+                      })}
+                    
+                  
                   
                      
                       
@@ -482,8 +498,9 @@ const ProfileForm = () => {
                         marginTop: 10,
                       }}
                     >
+                      <option value="">Select</option>
                       {dataArray.map((map)=>{
-                        return  <option value={map.id}>{map.name}</option>
+                        return  <option value={map.id}>{map.name} ({map?.parent?.name})</option>
                       })}
                      
                       
@@ -503,10 +520,7 @@ const ProfileForm = () => {
                       value={undefined}
                       //   onChange={onImageChange}
                       onChange={(event) => {
-                        formik.setFieldValue(
-                          "features_image",
-                          event.target.files[0]
-                        );
+                        setImageData(event.target.files[0]);
                       }}
                       // style={{
                       // padding: 10,

@@ -16,6 +16,7 @@ import StaticPagesRoutes from './views/staticPage/StaticPageRoutes';
 import AddListShopForm from './form/AddListShop';
 import AddCollectionForm from './form/AddCollection';
 import ListShopTable from './form/ListShop';
+import ListCollectionTable from './form/ListCollection';
 
 // session pages
 const NotFound = Loadable(lazy(() => import('app/views/sessions/NotFound')));
@@ -86,6 +87,12 @@ const routes = [
       {
         path: '/dashboard/add-collection',
         element: <AddCollectionForm />,
+        auth: authRoles.admin
+      },
+
+      {
+        path: '/dashboard/add-collection-list',
+        element: <ListCollectionTable />,
         auth: authRoles.admin
       },
 

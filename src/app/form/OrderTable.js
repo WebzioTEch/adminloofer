@@ -109,6 +109,15 @@ export default function OrderTable() {
 			description: 'This column has a value getter and is not sortable.',
 			sortable: false,
 			width: 160,
+			renderCell: (params) => {
+				return (
+					<>
+					{params?.value==1?(
+						<p>Confirmed</p>
+					):""}
+					</>
+				)
+			}
 		},
 		{
 			field: 'viewDetails',
