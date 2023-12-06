@@ -2,6 +2,7 @@ import { axiosInstance } from "../Axios";
 import { baseURL } from "baseURL";
 import Swal from "sweetalert2";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 const { createSlice } = require("@reduxjs/toolkit");
 
 const initialState = {
@@ -10,44 +11,54 @@ const initialState = {
     error: null,
     loading: false,
     loginInfo: null,
-    token: null,
+    token: null
   },
   createproduct: {
     success: false,
     loading: false,
     createProductInfo: null,
-    error: null,
+    error: null
   },
   product: {
     success: false,
     loading: false,
     ProductInfo: null,
-    error: null,
+    error: null
   },
   deleteProduct: {
     success: false,
     loading: false,
     deleteProductInfo: null,
-    error: null,
+    error: null
   },
   createCategory: {
     success: false,
     loading: false,
     createCategoryInfo: null,
-    error: null,
+    error: null
+  },
+  editCategory: {
+    editcategoryInfo: {
+      id: '1',
+      name: 'dhfhd',
+      slug: 'slug',
+      description: "jhdjh",
+      parent: 0,
+      image_url: null
+    }
   },
   category: {
     success: false,
     loading: false,
     categoryInfo: null,
-    error: null,
+    error: null
   },
   customer: {
     success: false,
     loading: false,
     customerInfo: null,
-    error: null,
-  },
+    error: null
+  }
 };
 
 const HomeReducer = createSlice({
@@ -112,7 +123,9 @@ const HomeReducer = createSlice({
       state.product.loading = false;
       state.product.error = action.payload;
     },
-
+    editCategoryFunc(state, action){
+      state.editCategory.editcategoryInfo = action.payload;
+    },
     deleteProductRequest(state, action) {
       state.deleteProduct.loading = true;
     },
@@ -168,6 +181,7 @@ const HomeReducer = createSlice({
     },
   },
 });
+
 
 const { actions } = HomeReducer;
 
@@ -388,8 +402,11 @@ export const createproductDispatch = (bodyData) => async (dispatch) => {
     );
   }
 };
-export const { productRequest, productSuccess, productFail } = actions;
 
+export const {editCategoryFunc} = actions;
+
+
+export const { productRequest, productSuccess, productFail } = actions;
 export const showproductDispatch = (bodyData) => async (dispatch) => {
   try {
     dispatch(productRequest());

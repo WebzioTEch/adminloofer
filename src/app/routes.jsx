@@ -17,6 +17,7 @@ import AddListShopForm from './form/AddListShop';
 import AddCollectionForm from './form/AddCollection';
 import ListShopTable from './form/ListShop';
 import ListCollectionTable from './form/ListCollection';
+import EditCategoryForm from './form/EditCategoryForm';
 
 // session pages
 const NotFound = Loadable(lazy(() => import('app/views/sessions/NotFound')));
@@ -40,7 +41,7 @@ const routes = [
   {
     element: (
       // <AuthGuard>
-        <MatxLayout />
+      <MatxLayout />
       //  </AuthGuard>
     ),
     children: [
@@ -95,7 +96,11 @@ const routes = [
         element: <ListCollectionTable />,
         auth: authRoles.admin
       },
-
+      {
+        path: '/dashboard/editcategory',
+        element: <EditCategoryForm />,
+        auth: authRoles.admin
+      },
       // e-chart rooute
       {
         path: '/charts/echarts',
@@ -118,7 +123,6 @@ const routes = [
   { path: '/session/signin', element: <JwtLogin /> },
   { path: '/session/signup', element: <JwtRegister /> },
   { path: '/session/forgot-password', element: <ForgotPassword /> },
-
 
   { path: '/', element: <Navigate to="session/signin" /> },
   { path: '*', element: <NotFound /> }

@@ -35,86 +35,96 @@ export default function ProductTable() {
   const token = useSelector((state) => state);
 
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
+    { field: 'id', headerName: 'ID', width: 90 },
     {
-      field: "name",
-      headerName: "First name",
+      field: 'name',
+      headerName: 'First name',
       width: 150,
       editable: true,
       sortable: false,
-      valueGetter: (params) => `${params.row.name || ""}`,
+      valueGetter: (params) => `${params.row.name || ''}`
     },
     {
-      field: "product_type",
-      headerName: "Product Type",
+      field: 'product_catagory',
+      headerName: 'Product Catagory',
       width: 150,
       editable: true,
       sortable: false,
-      valueGetter: (params) => `${params.row.product_type || ""}`,
+      valueGetter: (params) => `${params.row.category || ''}`
     },
     {
-      field: "description",
-      headerName: "Description",
-      type: "number",
+      field: 'description',
+      headerName: 'Description',
+      type: 'number',
       width: 160,
       editable: true,
       sortable: false,
-      valueGetter: (params) => `${params.row.description || ""}`,
+      valueGetter: (params) => `${params.row.description || ''}`
     },
     {
-      field: "price",
-      headerName: "Price",
-      description: "This column has a value getter and is not sortable.",
-      type: "number",
+      field: 'price',
+      headerName: 'Price',
+      description: 'This column has a value getter and is not sortable.',
+      type: 'number',
       sortable: false,
       width: 160,
-      valueGetter: (params) => `${params.row.price || ""}`,
+      valueGetter: (params) => `${params.row.price || ''}`
     },
     {
-      field: "offer_price",
-      headerName: "Offer Price",
-      description: "This column has a value getter and is not sortable.",
+      field: 'offer_price',
+      headerName: 'Offer Price',
+      description: 'This column has a value getter and is not sortable.',
       sortable: false,
       width: 160,
-      valueGetter: (params) => `${params.row.offer_price || ""}`,
+      valueGetter: (params) => `${params.row.offer_price || ''}`
     },
     {
-      field: "features_image",
-      headerName: "Features Image",
-      description: "This column has a value getter and is not sortable.",
+      field: 'features_image',
+      headerName: 'Features Image',
+      description: 'This column has a value getter and is not sortable.',
       sortable: false,
       width: 160,
-      valueGetter: (params) => `${params.row.features_image || ""}`,
-      renderCell: (params) => (
-        <img src={params.row.features_image} width={50} height={50} />
-      ),
+      valueGetter: (params) => `${params.row.features_image || ''}`,
+      renderCell: (params) => <img src={params.row.features_image} width={50} height={50} />
     },
     {
-      field: "category_id",
-      headerName: "Category id",
-      description: "This column has a value getter and is not sortable.",
+      field: 'category_id',
+      headerName: 'Category id',
+      description: 'This column has a value getter and is not sortable.',
       sortable: false,
       width: 160,
-      valueGetter: (params) => `${params.row.category_id || ""}`,
+      valueGetter: (params) => `${params.row.category_id || ''}`
     },
 
     {
-      field: "actions",
-      headerName: "Actions",
+      field: 'actions',
+      headerName: 'Actions',
       width: 100,
       sortable: false,
       renderCell: (params) => (
         <>
-        {/* {console.log('ghfggf', params)} */}
-        <React.Fragment>
-          <GridDeleteIcon
-            onClick={() => handleDelete(params.id)}
-            style={{ cursor: "pointer" }}
-          />
-        </React.Fragment>
+          {/* {console.log('ghfggf', params)} */}
+          <React.Fragment>
+            <GridDeleteIcon onClick={() => handleDelete(params.id)} style={{ cursor: 'pointer' }} />
+          </React.Fragment>
         </>
-      ),
+      )
     },
+
+    {
+      field: 'Edit',
+      headerName: 'Actions',
+      width: 100,
+      sortable: false,
+      renderCell: (params) => (
+        <>
+          {/* {console.log('ghfggf', params)} */}
+          <React.Fragment>
+            <span onClick={() => handleEdit(params.id)} style={{ cursor: 'pointer' }} >Edit</span>
+          </React.Fragment>
+        </>
+      )
+    }
     //   {
     // 	field: 'Edit',
     // 	headerName: 'Actions',
@@ -153,6 +163,7 @@ export default function ProductTable() {
       const editedRow = editedData[idToEdit];
       // Dispatch an API call here with the editedRow data
       // Example: dispatch(updateProductDispatch(ID, editedRow));
+      // dispatch(updateProductDispatch)
       console.log("Edited data:", editedRow);
     }
   };
