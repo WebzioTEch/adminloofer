@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -20,7 +21,7 @@ export default function ListShopTable() {
 	const dispatch = useDispatch(); 
 	const categoryData = useSelector((state) => state.home.category.categoryInfo);
 	const [productInfo,setProductInfo] = useState([])
-
+	const navigate = useNavigate();
 
 
 
@@ -91,85 +92,111 @@ export default function ListShopTable() {
 	  var rows = mapCategoryDataToRows(productInfo);
 
 	  const columns = [
-		{ field: 'id', headerName: 'ID', width: 90 },
-		{
-			field: 'title',
-			headerName: 'Title',
-			width: 150,
-			editable: true
-		},
-		{
-			field: 'url',
-			headerName: 'Url',
-			width: 150,
-			editable: true
-		},
-	
-		{
-			field: 'image_url',
-			headerName: 'Image Url',
-			description: 'This column has a value getter and is not sortable.',
-			sortable: false,
-			width: 160,
-			renderCell: (params) =>{ 
-				console.log('params', params);
-			   return <img src={params.row.image} style={{ height: 50 }} />},
-			  
-			
-		},
-		{
-			field: "action",
-			headerName: "Action",
-			width: 300,
-			editable: true,
-			renderCell: (cellValues) => {
-			  console.log("cellValues", cellValues)
-			  return (
-				<Box style={{ display: "flex", justifyContent: "space-between" }}>
-				  <Button
-					variant="contained"
-					color="primary"
-					style={{ marginLeft: 10 }}
-					onClick={(event) => {
-					  const config = {
-						headers: {
-						//   "Content-Type": "multipart/form-data",
-						  Authorization: `Bearer ${localStorage.getItem("token")}`,
-						},
-                     
-					  };
-				  
-					  axios.post("https://loofer.bellazza.in/api/admin/delete-shop-event", {"shop_event_id":cellValues.id}, config)
-					  .then((res) => {
-						  console.log(res)
-						  let product = [];
-						  if (res.data.status) {
-							Swal.fire({
-							  title: "Shop Status",
-							  text: "Delete shop",
-							  icon: "success",
-							  });
-							  fatchData();	
-						  }else{
-							Swal.fire({
-							  title: "Shop Status Status",
-							  text: "You are not authorized as admin",
-							  icon: "error",
-							  });
-							  fatchData();
-						  }
-				  
-						  console.log({ res });
-						})
-					}}
-				  >
-					Delete
-				  </Button>
-				</Box>
-			  );
-			},
-		  },
-	];
+      { field: 'id', headerName: 'ID', width: 90 },
+      {
+        field: 'title',
+        headerName: 'Title',
+        width: 150,
+        editable: true
+      },
+      {
+        field: 'url',
+        headerName: 'Url',
+        width: 150,
+        editable: true
+      },
+
+      {
+        field: 'image_url',
+        headerName: 'Image Url',
+        description: 'This column has a value getter and is not sortable.',
+        sortable: false,
+        width: 160,
+        renderCell: (params) => {
+          console.log('params', params);
+          return <img src={params.row.image} style={{ height: 50 }} />;
+        }
+      },
+      {
+        field: 'action',
+        headerName: 'Action',
+        width: 300,
+        editable: true,
+        renderCell: (cellValues) => {
+          console.log('cellValues', cellValues);
+          return (
+            <Box style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Button
+                variant="contained"
+                color="primary"
+                style={{ marginLeft: 10 }}
+                onClick={(event) => {
+                  const config = {
+                    headers: {
+                      //   "Content-Type": "multipart/form-data",
+                      Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                  };
+
+                  axios
+                    .post(
+                      'https://loofer.bellazza.in/api/admin/delete-shop-event',
+                      { shop_event_id: cellValues.id },
+                      config
+                    )
+                    .then((res) => {
+                      console.log(res);
+                      let product = [];
+                      if (res.data.status) {
+                        Swal.fire({
+                          title: 'Shop Status',
+                          text: 'Delete shop',
+                          icon: 'success'
+                        });
+                        fatchData();
+                      } else {
+                        Swal.fire({
+                          title: 'Shop Status Status',
+                          text: 'You are not authorized as admin',
+                          icon: 'error'
+                        });
+                        fatchData();
+                      }
+
+                      console.log({ res });
+                    });
+                }}
+              >
+                Delete
+              </Button>
+            </Box>
+          );
+        }
+      },
+      {
+        field: 'Edit',
+        headerName: 'Action',
+        width: 300,
+        editable: true,
+        renderCell: (params) => {
+
+          return (
+            <Box style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Button
+                variant="contained"
+                color="primary"
+                style={{ marginLeft: 10 }}
+                onClick={()=>{
+					navigate(`/dashboard/editlistshop/${params.id}`);
+				}}
+              >
+                Edit
+              </Button>
+            </Box>
+          );
+        }
+      }
+    ];
 	
 	  
 	return (

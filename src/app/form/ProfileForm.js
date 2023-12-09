@@ -200,369 +200,369 @@ const ProfileForm = () => {
       console.error({ err });
     });
 };
+console.log("dataArray", dataArray);
+return (
+  <Formik
+    initialValues={{
+      // email:'',
+      name: "",
+      product_type: "",
+      description: "",
+      stock: "",
+      size: "",
 
-  return (
-    <Formik
-      initialValues={{
-        // email:'',
-        name: "",
-        product_type: "",
-        description: "",
-        stock: "",
-        size: "",
-
-        category: "",
-        price: "",
-        offer_price: "",
-        quantity: "",
-        category_id: "",
-        features_image: null,
-      }}
-      // validationSchema={validationSchema}
-      onSubmit={(e) => {
-        // e.preventDefault()
-        for (let index = 0; index < 1; index++) {
-          // const element = array[index];
-          handleFormSubmit(e, index);
-        }
-      }}
-    >
-      {(formik) => {
-        const { errors, setFieldValue } = formik;
-        return (
-          <Form encType="multipart/form-data">
-            <Box style={{ padding: 10 }}>
-              <Box
-                style={{
-                  boxShadow:
-                    "rgba(0, 0, 0, 0.06) 0px 3px 3px -2px, rgba(0, 0, 0, 0.04) 0px 3px 4px 0px, rgba(0, 0, 0, 0.04) 0px 1px 8px 0px",
-                  padding: 30,
-                  background: "white",
-                }}
-              >
-                <h2>Add New Product</h2>
-                <Divider style={{ marginTop: 20, marginBottom: 20 }} />
-                <Grid container style={{ padding: 10 }} spacing={4}>
-                  {successMessage && (
-                    <div style={{ color: "green", marginBottom: 10 }}>
-                      {successMessage}
-                    </div>
-                  )}
-                  <Grid item xs={12} lg={6}>
-                    <Field
-                      name="name"
-                      type="text"
-                      placeholder="Name"
-                      style={{
-                        padding: 10,
-                        width: "100%",
-                        borderRadius: 5,
-                        border: errors?.name ? "2px solid red" : "1px solid",
-                        marginTop: 10,
-                      }}
-                      inputProps={{
-                        style: { padding: 12 },
-                      }}
-                    />
-                    <br />
-                    <ErrorMessage
-                      name="name"
-                      component="div"
-                      style={{ color: "red", fontSize: 12 }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} lg={6}>
-                    <Field
-                      name="product_type"
-                      type="text"
-                      placeholder="product Code"
-                      style={{
-                        padding: 10,
-                        width: "100%",
-                        borderRadius: 5,
-                        border: errors?.product_type
-                          ? "2px solid red"
-                          : "1px solid",
-                        marginTop: 10,
-                      }}
-                      inputProps={{
-                        style: { padding: 12 },
-                      }}
-                    />
-                    <br />
-                    <ErrorMessage
-                      name="product_type"
-                      component="div"
-                      style={{ color: "red", fontSize: 12 }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} lg={6}>
-                    <Field
-                      name="description"
-                      as="textarea"
-                      rows="10"
-                      type="text"
-                      placeholder="description"
-                      style={{
-                        padding: 10,
-                        width: "100%",
-                        borderRadius: 5,
-                        border: errors?.description
-                          ? "2px solid red"
-                          : "1px solid",
-                        marginTop: 10,
-                      }}
-                      inputProps={{
-                        style: { padding: 12 },
-                      }}
-                    />
-                    <br />
-                    <ErrorMessage
-                      name="description"
-                      component="div"
-                      style={{ color: "red", fontSize: 12 }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} lg={6}>
-                    <Field
-                      name="stock"
-                      type="text"
-                      placeholder="Stock"
-                      style={{
-                        padding: 10,
-                        width: "100%",
-                        borderRadius: 5,
-                        border: errors?.stock ? "2px solid red" : "1px solid",
-                        marginTop: 10,
-                      }}
-                      inputProps={{
-                        style: { padding: 12 },
-                      }}
-                    />
-                    <br />
-                    <ErrorMessage
-                      name="stock"
-                      component="div"
-                      style={{ color: "red", fontSize: 12 }}
-                    />
-                  </Grid>
-                  {console.log('attributes', attributes)}
-                 <Grid item xs={12} lg={6}>
-                    <Field
-                      name="size"
-                      as="select"
-                      style={{
-                        padding: 10,
-                        width: "100%",
-                        borderRadius: 5,
-                        border: errors?.size
-                          ? "2px solid red"
-                          : "1px solid",
-                        marginTop: 10,
-                      }}
-                    >
-                    <option value=''></option>
-                      
-                    {/* <option value='4'>XL</option> */}
-               
-                    
-                     
-                      {attributes.map((map)=>{
-                       
-                       return <option value={map?.id}>{map?.name}</option>
-                          
-                      })}
-                    
-                  
-                  
-                     
-                      
-                      {/* Add more options as needed */}
-                    </Field>
-                    <br />
-                    <ErrorMessage
-                      name="category_id"
-                      component="div"
-                      style={{ color: "red", fontSize: 12 }}
-                    />
-                  </Grid>
-                  {/* <Grid item xs={12} lg={6}>
-                    <Field
-                      name="category"
-                      type="text"
-                      placeholder="CATEGORY"
-                      style={{
-                        padding: 10,
-                        width: "100%",
-                        borderRadius: 5,
-                        border: errors?.category
-                          ? "2px solid red"
-                          : "1px solid",
-                        marginTop: 10,
-                      }}
-                      inputProps={{
-                        style: { padding: 12 },
-                      }}
-                    />
-                    <br />
-                    <ErrorMessage
-                      name="category"
-                      component="div"
-                      style={{ color: "red", fontSize: 12 }}
-                    />
-                  </Grid> */}
-                  <Grid item xs={12} lg={6}>
-                    <Field
-                      name="price"
-                      type="text"
-                      placeholder="PRICE"
-                      style={{
-                        padding: 10,
-                        width: "100%",
-                        borderRadius: 5,
-                        border: errors?.price ? "2px solid red" : "1px solid",
-                        marginTop: 10,
-                      }}
-                      inputProps={{
-                        style: { padding: 12 },
-                      }}
-                    />
-                    <br />
-                    <ErrorMessage
-                      name="price"
-                      component="div"
-                      style={{ color: "red", fontSize: 12 }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} lg={6}>
-                    <Field
-                      name="offer_price"
-                      type="text"
-                      placeholder="Sale Price"
-                      style={{
-                        padding: 10,
-                        width: "100%",
-                        borderRadius: 5,
-                        border: errors?.offer_price
-                          ? "2px solid red"
-                          : "1px solid",
-                        marginTop: 10,
-                      }}
-                      inputProps={{
-                        style: { padding: 12 },
-                      }}
-                    />
-                    <br />
-                    <ErrorMessage
-                      name="offer_price"
-                      component="div"
-                      style={{ color: "red", fontSize: 12 }}
-                    />
-                  </Grid>{" "}
-                  <Grid item xs={12} lg={6}>
-                    <Field
-                      name="quantity"
-                      type="text"
-                      placeholder="Quantity"
-                      style={{
-                        padding: 10,
-                        width: "100%",
-                        borderRadius: 5,
-                        border: errors?.quantity
-                          ? "2px solid red"
-                          : "1px solid",
-                        marginTop: 10,
-                      }}
-                      inputProps={{
-                        style: { padding: 12 },
-                      }}
-                    />
-                    <br />
-                    <ErrorMessage
-                      name="quantity"
-                      component="div"
-                      style={{ color: "red", fontSize: 12 }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} lg={6}>
-                    <Field
-                      name="category_id"
-                      as="select"
-                      style={{
-                        padding: 10,
-                        width: "100%",
-                        borderRadius: 5,
-                        border: errors?.category_id
-                          ? "2px solid red"
-                          : "1px solid",
-                        marginTop: 10,
-                      }}
-                    >
-                      <option value="">Select</option>
-                      {dataArray.map((map)=>{
-                        return  <option value={map.id}>{map.name} ({map?.parent?.name})</option>
-                      })}
-                     
-                      
-                      {/* Add more options as needed */}
-                    </Field>
-                    <br />
-                    <ErrorMessage
-                      name="category_id"
-                      component="div"
-                      style={{ color: "red", fontSize: 12 }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} lg={6}>
-                    <input
-                      name="features_image"
-                      type="file"
-                      value={undefined}
-                      //   onChange={onImageChange}
-                      onChange={(event) => {
-                        setImageData(event.target.files[0]);
-                      }}
-                      // style={{
-                      // padding: 10,
-                      // width: '100%',
-                      // borderRadius: 5,
-                      // border: errors?.features_image ? '2px solid red' : '1px solid',
-                      // marginTop: 10
-                      // }}
-                      // inputProps={{
-                      // style: { padding: 12 }
-                      // }}
-                    />
-                    <br />
-                    <ErrorMessage
-                      name="features_image"
-                      component="div"
-                      style={{ color: "red", fontSize: 12 }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} lg={6}></Grid>
-                  <Grid item xs={12} lg={3}>
-                    <Button
-                      type="submit"
-                      style={{
-                        background: "red",
-                        color: "white",
-                        marginTop: 30,
-                        borderRadius: 5,
-                        width: "100%",
-                      }}
-                    >
-                      Save
-                    </Button>
-                  </Grid>
+      category: "",
+      price: "",
+      offer_price: "",
+      quantity: "",
+      category_id: "",
+      features_image: null,
+    }}
+    // validationSchema={validationSchema}
+    onSubmit={(e) => {
+      // e.preventDefault()
+      for (let index = 0; index < 1; index++) {
+        // const element = array[index];
+        handleFormSubmit(e, index);
+      }
+    }}
+  >
+    {(formik) => {
+      const { errors, setFieldValue } = formik;
+      return (
+        <Form encType="multipart/form-data">
+          <Box style={{ padding: 10 }}>
+            <Box
+              style={{
+                boxShadow:
+                  "rgba(0, 0, 0, 0.06) 0px 3px 3px -2px, rgba(0, 0, 0, 0.04) 0px 3px 4px 0px, rgba(0, 0, 0, 0.04) 0px 1px 8px 0px",
+                padding: 30,
+                background: "white",
+              }}
+            >
+              <h2>Add New Product</h2>
+              <Divider style={{ marginTop: 20, marginBottom: 20 }} />
+              <Grid container style={{ padding: 10 }} spacing={4}>
+                {successMessage && (
+                  <div style={{ color: "green", marginBottom: 10 }}>
+                    {successMessage}
+                  </div>
+                )}
+                <Grid item xs={12} lg={6}>
+                  <Field
+                    name="name"
+                    type="text"
+                    placeholder="Name"
+                    style={{
+                      padding: 10,
+                      width: "100%",
+                      borderRadius: 5,
+                      border: errors?.name ? "2px solid red" : "1px solid",
+                      marginTop: 10,
+                    }}
+                    inputProps={{
+                      style: { padding: 12 },
+                    }}
+                  />
+                  <br />
+                  <ErrorMessage
+                    name="name"
+                    component="div"
+                    style={{ color: "red", fontSize: 12 }}
+                  />
                 </Grid>
-              </Box>
+                <Grid item xs={12} lg={6}>
+                  <Field
+                    name="product_type"
+                    type="text"
+                    placeholder="product Code"
+                    style={{
+                      padding: 10,
+                      width: "100%",
+                      borderRadius: 5,
+                      border: errors?.product_type
+                        ? "2px solid red"
+                        : "1px solid",
+                      marginTop: 10,
+                    }}
+                    inputProps={{
+                      style: { padding: 12 },
+                    }}
+                  />
+                  <br />
+                  <ErrorMessage
+                    name="product_type"
+                    component="div"
+                    style={{ color: "red", fontSize: 12 }}
+                  />
+                </Grid>
+                <Grid item xs={12} lg={6}>
+                  <Field
+                    name="description"
+                    as="textarea"
+                    rows="10"
+                    type="text"
+                    placeholder="description"
+                    style={{
+                      padding: 10,
+                      width: "100%",
+                      borderRadius: 5,
+                      border: errors?.description
+                        ? "2px solid red"
+                        : "1px solid",
+                      marginTop: 10,
+                    }}
+                    inputProps={{
+                      style: { padding: 12 },
+                    }}
+                  />
+                  <br />
+                  <ErrorMessage
+                    name="description"
+                    component="div"
+                    style={{ color: "red", fontSize: 12 }}
+                  />
+                </Grid>
+                <Grid item xs={12} lg={6}>
+                  <Field
+                    name="stock"
+                    type="text"
+                    placeholder="Stock"
+                    style={{
+                      padding: 10,
+                      width: "100%",
+                      borderRadius: 5,
+                      border: errors?.stock ? "2px solid red" : "1px solid",
+                      marginTop: 10,
+                    }}
+                    inputProps={{
+                      style: { padding: 12 },
+                    }}
+                  />
+                  <br />
+                  <ErrorMessage
+                    name="stock"
+                    component="div"
+                    style={{ color: "red", fontSize: 12 }}
+                  />
+                </Grid>
+                {console.log('attributes', attributes)}
+                <Grid item xs={12} lg={6}>
+                  <Field
+                    name="size"
+                    as="select"
+                    style={{
+                      padding: 10,
+                      width: "100%",
+                      borderRadius: 5,
+                      border: errors?.size
+                        ? "2px solid red"
+                        : "1px solid",
+                      marginTop: 10,
+                    }}
+                  >
+                  <option value=''></option>
+                    
+                  {/* <option value='4'>XL</option> */}
+              
+                  
+                    
+                    {attributes.map((map)=>{
+                      
+                      return <option value={map?.id}>{map?.name}</option>
+                        
+                    })}
+                  
+                
+                
+                    
+                    
+                    {/* Add more options as needed */}
+                  </Field>
+                  <br />
+                  <ErrorMessage
+                    name="category_id"
+                    component="div"
+                    style={{ color: "red", fontSize: 12 }}
+                  />
+                </Grid>
+                {/* <Grid item xs={12} lg={6}>
+                  <Field
+                    name="category"
+                    type="text"
+                    placeholder="CATEGORY"
+                    style={{
+                      padding: 10,
+                      width: "100%",
+                      borderRadius: 5,
+                      border: errors?.category
+                        ? "2px solid red"
+                        : "1px solid",
+                      marginTop: 10,
+                    }}
+                    inputProps={{
+                      style: { padding: 12 },
+                    }}
+                  />
+                  <br />
+                  <ErrorMessage
+                    name="category"
+                    component="div"
+                    style={{ color: "red", fontSize: 12 }}
+                  />
+                </Grid> */}
+                <Grid item xs={12} lg={6}>
+                  <Field
+                    name="price"
+                    type="text"
+                    placeholder="PRICE"
+                    style={{
+                      padding: 10,
+                      width: "100%",
+                      borderRadius: 5,
+                      border: errors?.price ? "2px solid red" : "1px solid",
+                      marginTop: 10,
+                    }}
+                    inputProps={{
+                      style: { padding: 12 },
+                    }}
+                  />
+                  <br />
+                  <ErrorMessage
+                    name="price"
+                    component="div"
+                    style={{ color: "red", fontSize: 12 }}
+                  />
+                </Grid>
+                <Grid item xs={12} lg={6}>
+                  <Field
+                    name="offer_price"
+                    type="text"
+                    placeholder="Sale Price"
+                    style={{
+                      padding: 10,
+                      width: "100%",
+                      borderRadius: 5,
+                      border: errors?.offer_price
+                        ? "2px solid red"
+                        : "1px solid",
+                      marginTop: 10,
+                    }}
+                    inputProps={{
+                      style: { padding: 12 },
+                    }}
+                  />
+                  <br />
+                  <ErrorMessage
+                    name="offer_price"
+                    component="div"
+                    style={{ color: "red", fontSize: 12 }}
+                  />
+                </Grid>{" "}
+                <Grid item xs={12} lg={6}>
+                  <Field
+                    name="quantity"
+                    type="text"
+                    placeholder="Quantity"
+                    style={{
+                      padding: 10,
+                      width: "100%",
+                      borderRadius: 5,
+                      border: errors?.quantity
+                        ? "2px solid red"
+                        : "1px solid",
+                      marginTop: 10,
+                    }}
+                    inputProps={{
+                      style: { padding: 12 },
+                    }}
+                  />
+                  <br />
+                  <ErrorMessage
+                    name="quantity"
+                    component="div"
+                    style={{ color: "red", fontSize: 12 }}
+                  />
+                </Grid>
+                <Grid item xs={12} lg={6}>
+                  <Field
+                    name="category_id"
+                    as="select"
+                    style={{
+                      padding: 10,
+                      width: "100%",
+                      borderRadius: 5,
+                      border: errors?.category_id
+                        ? "2px solid red"
+                        : "1px solid",
+                      marginTop: 10,
+                    }}
+                  >
+                    <option value="">Select</option>
+                    {dataArray.map((map)=>{
+                      return  <option value={map.id}>{map.name} ({map?.parent?.name})</option>
+                    })}
+                    
+                    
+                    {/* Add more options as needed */}
+                  </Field>
+                  <br />
+                  <ErrorMessage
+                    name="category_id"
+                    component="div"
+                    style={{ color: "red", fontSize: 12 }}
+                  />
+                </Grid>
+                <Grid item xs={12} lg={6}>
+                  <input
+                    name="features_image"
+                    type="file"
+                    value={undefined}
+                    //   onChange={onImageChange}
+                    onChange={(event) => {
+                      setImageData(event.target.files[0]);
+                    }}
+                    // style={{
+                    // padding: 10,
+                    // width: '100%',
+                    // borderRadius: 5,
+                    // border: errors?.features_image ? '2px solid red' : '1px solid',
+                    // marginTop: 10
+                    // }}
+                    // inputProps={{
+                    // style: { padding: 12 }
+                    // }}
+                  />
+                  <br />
+                  <ErrorMessage
+                    name="features_image"
+                    component="div"
+                    style={{ color: "red", fontSize: 12 }}
+                  />
+                </Grid>
+                <Grid item xs={12} lg={6}></Grid>
+                <Grid item xs={12} lg={3}>
+                  <Button
+                    type="submit"
+                    style={{
+                      background: "red",
+                      color: "white",
+                      marginTop: 30,
+                      borderRadius: 5,
+                      width: "100%",
+                    }}
+                  >
+                    Save
+                  </Button>
+                </Grid>
+              </Grid>
             </Box>
-          </Form>
-        );
-      }}
-    </Formik>
-  );
+          </Box>
+        </Form>
+      );
+    }}
+  </Formik>
+);
 };
 
 export default ProfileForm;

@@ -18,6 +18,9 @@ import AddCollectionForm from './form/AddCollection';
 import ListShopTable from './form/ListShop';
 import ListCollectionTable from './form/ListCollection';
 import EditCategoryForm from './form/EditCategoryForm';
+import EditProduct from './form/EditProduct';
+import EditCollection from './form/EditCollection';
+import EditListShop from './form/EditListShop';
 
 // session pages
 const NotFound = Loadable(lazy(() => import('app/views/sessions/NotFound')));
@@ -84,6 +87,11 @@ const routes = [
         element: <ListShopTable />,
         auth: authRoles.admin
       },
+      {
+        path: '/dashboard/editlistshop/:id',
+        element: <EditListShop />,
+        auth: authRoles.admin
+      },
 
       {
         path: '/dashboard/add-collection',
@@ -97,8 +105,18 @@ const routes = [
         auth: authRoles.admin
       },
       {
+        path: '/dashboard/editcollection/:id',
+        element: <EditCollection />,
+        auth: authRoles.admin
+      },
+      {
         path: '/dashboard/editcategory',
         element: <EditCategoryForm />,
+        auth: authRoles.admin
+      },
+      {
+        path: '/dashboard/editproduct/:id',
+        element: <EditProduct />,
         auth: authRoles.admin
       },
       // e-chart rooute

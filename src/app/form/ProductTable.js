@@ -10,6 +10,7 @@ import {
 import { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const rows = [
   {
@@ -25,6 +26,7 @@ const rows = [
 ];
 
 export default function ProductTable() {
+  const navigate = useNavigate();
   const initialEditedData = {};
   const dispatch = useDispatch();
   const [editedData, setEditedData] = useState(initialEditedData);
@@ -159,13 +161,11 @@ export default function ProductTable() {
   const handleEdit = (idToEdit) => {
     console.log(idToEdit);
     // Check if the edited data is available in the editedData object
-    if (editedData[idToEdit]) {
-      const editedRow = editedData[idToEdit];
       // Dispatch an API call here with the editedRow data
       // Example: dispatch(updateProductDispatch(ID, editedRow));
       // dispatch(updateProductDispatch)
-      console.log("Edited data:", editedRow);
-    }
+    navigate(`/dashboard/editproduct/${idToEdit}`);
+    
   };
 
   useEffect(() => {
@@ -238,7 +238,7 @@ export default function ProductTable() {
   };
 
   var rows = mapCategoryDataToRows(productInfo);
-
+  console.log(productInfo);
   return (
     <Box sx={{ height: 400, width: "100%" }}>
       {console.log(productInfo, "productInfo")}
@@ -247,9 +247,9 @@ export default function ProductTable() {
         rows={productInfo?.length > 0 ? productInfo : rows}
         columns={columns}
         onEditCellChange={handleCellEdit}
-		getRowId={(row) => {
-			console.log("Logging in getRowId",row);
-			return row?.id;
+		    getRowId={(row) => {
+			  console.log("Logging in getRowId",row);
+			  return row?.id;
 		  }}
 		
         // initialState={{

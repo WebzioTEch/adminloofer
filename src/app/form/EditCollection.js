@@ -2,33 +2,75 @@ import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup'; // Import Yup for validation
 import { Grid, Box, Button, Divider } from '@mui/material';
-import { createCategoryDispatch } from 'reducers/HomeReducer';
-import { useDispatch, useSelector } from 'react-redux';
+import {
+  createCategoryDispatch,
+  createListShopDispatch,
+  createCollectionDispatch
+} from 'reducers/HomeReducer';
+import { useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { SwapCalls } from '@mui/icons-material';
 import { Select, FormControl, InputLabel, MenuItem, FormHelperText } from '@material-ui/core';
 
 import Swal from 'sweetalert2';
-import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 
-
-const EditCategoryForm = () => {
-  const editCategoryData = useSelector((state) => state.home.editCategory.editcategoryInfo);
-  console.log(editCategoryData, 'editCategoryData compo');
-  const dispatch = useDispatch();
+const EditCollection = () => {
+  const navigate = useNavigate();
   const [dataArray, setDataArray] = useState(
     JSON.parse(String(localStorage.getItem('category_list'))) || []
   );
-  
+  const [editData, setEditData] = useState();
+  // const [categoryInfo, setCategoryInfo] = useState();
+  const dispatch = useDispatch();
   const { id } = useParams();
-  const navigate = useNavigate();
+
+  useEffect(() => {
+    fatchEditData();
+  }, []);
+
+  const fatchEditData = () => {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    };
+
+    fetch(`https://loofer.bellazza.in/api/list-collection`, config)
+      .then((response) => response.json())
+      .then((res) => {
+        if (res) {
+          const editData = res?.data.filter((p) => p.id === parseInt(id))[0];
+          setEditData(editData);
+
+          console.log({ res });
+        } else {
+          Swal.fire({
+            title: 'Collection Status',
+            text: 'You are not authorized as admin',
+            icon: 'error'
+          });
+        }
+      })
+      .catch((err) => {
+        console.error({ err });
+      });
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const handleFormSubmit = (values, index) => {
-    // formData.append("sub_parent_id", values.sub_parent_id);
-    
-    
+    const formData = new FormData();
+    formData.append('title', values.title);
+    formData.append('url', values.url);
+
+    formData.append('image', values.image);
     try {
-      
       const formData = new FormData();
       formData.append('name', values.name);
       formData.append('slug', values.slug);
@@ -43,7 +85,8 @@ const EditCategoryForm = () => {
         }
       };
 
-      axios.post(`https://loofer.bellazza.in/api/admin/categories/update/${id}`, formData, config)
+      axios
+        .post(`https://loofer.bellazza.in/api/edit-collection/${id}`, formData, config)
         .then((res) => {
           if (res.status == 200) {
             Swal.fire({
@@ -52,7 +95,7 @@ const EditCategoryForm = () => {
               icon: 'success'
             });
             setTimeout(() => {
-              navigate('/dashboard/productlist');
+              navigate('/dashboard/add-collection-list');
             }, 1000);
           } else {
             Swal.fire({
@@ -70,33 +113,55 @@ const EditCategoryForm = () => {
         });
 
       // dispatch(createproductDispatch(formData));
-    } catch (error) {
-      console.error('Error:', error);
-    }
+    } catch (error) {}
   };
 
   // Define validation schema using Yup
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    slug: Yup.string().required('Slug is required'),
-    description: Yup.string().required('Description is required'),
+    title: Yup.string().required('Title is required'),
+    url: Yup.string().required('Url is required'),
 
     image: Yup.string().required('Image URL is required')
     // .url('Invalid URL')
   });
 
+  const fetchData = () => {
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    };
 
+    fetch(`https://loofer.bellazza.in/api/admin/categories`, config)
+      .then((response) => response.json())
+      .then((res) => {
+        let product = [];
+        if (res) {
+          res.map((val) => {
+            product.push(val);
+          });
+          setDataArray(product);
 
+          console.log({ res });
+        }
+      })
+      .catch((err) => {
+        console.error({ err });
+      });
+  };
+
+  console.log(editData);
   return (
     <Formik
-      key={editCategoryData?.id || 'new'} // Use a unique key to trigger reinitialization
+      key={editData?.id || 'new'}
       enableReinitialize
       initialValues={{
-        name: editCategoryData?.name,
-        slug: editCategoryData?.slug,
-        description: editCategoryData?.description,
-        parent_id: editCategoryData?.parent_id,
-        image: editCategoryData?.image
+        title: editData?.title,
+        url: editData?.url,
+
+        image: editData?.image
         // sub_parent_id:""
       }}
       onSubmit={(e) => {
@@ -121,19 +186,19 @@ const EditCategoryForm = () => {
                   background: 'white'
                 }}
               >
-                <h2>Edit Category</h2>
+                <h2>Edit Collection</h2>
                 <Divider style={{ marginTop: 20, marginBottom: 20 }} />
                 <Grid container style={{ padding: 10 }} spacing={4}>
                   <Grid item xs={12} lg={6}>
                     <Field
-                      name="name"
+                      name="title"
                       type="text"
-                      placeholder="Name"
+                      placeholder="Title"
                       style={{
                         padding: 10,
                         width: '100%',
                         borderRadius: 5,
-                        border: errors.name ? '2px solid red' : '1px solid',
+                        border: errors.title ? '2px solid red' : '1px solid',
                         marginTop: 10
                       }}
                       inputProps={{
@@ -142,14 +207,14 @@ const EditCategoryForm = () => {
                     />
                     <br />
                     {errors.name ? (
-                      <span style={{ color: 'red', fontSize: 12 }}>{errors.name}</span>
+                      <span style={{ color: 'red', fontSize: 12 }}>{errors.title}</span>
                     ) : null}
                   </Grid>
                   <Grid item xs={12} lg={6}>
                     <Field
-                      name="slug"
+                      name="url"
                       type="text"
-                      placeholder="Slug"
+                      placeholder="https:// or http://"
                       style={{
                         padding: 10,
                         width: '100%',
@@ -166,55 +231,7 @@ const EditCategoryForm = () => {
                       <span style={{ color: 'red', fontSize: 12 }}>{errors.slug}</span>
                     ) : null}
                   </Grid>
-                  <Grid item xs={12} lg={6}>
-                    <Field
-                      name="description"
-                      type="text"
-                      as="textarea"
-                      rows="10"
-                      placeholder="Description"
-                      style={{
-                        padding: 10,
-                        width: '100%',
-                        borderRadius: 5,
-                        border: errors.description ? '2px solid red' : '1px solid',
-                        marginTop: 10
-                      }}
-                      inputProps={{
-                        style: { padding: 12 }
-                      }}
-                    />
-                    <br />
-                    {errors.description ? (
-                      <span style={{ color: 'red', fontSize: 12 }}>{errors.description}</span>
-                    ) : null}
-                  </Grid>
-                  <Grid item xs={12} lg={6}>
-                    <InputLabel htmlFor="parent_id">Parent ID</InputLabel>
-                    <Field
-                      as={Select}
-                      style={{
-                        padding: 5,
-                        width: '100%',
-                        borderRadius: 5,
-                        border: errors.description ? '2px solid red' : '1px solid',
-                        marginTop: 5
-                      }}
-                      name="parent_id"
-                      label="Parent ID"
-                      error={errors.parent_id ? true : false}
-                    >
-                      {dataArray.map((count) => {
-                        return (
-                          <MenuItem value={count.id}>
-                            <em>
-                              {count.name} {count.parent ? <span>({count.parent.name})</span> : ''}{' '}
-                            </em>
-                          </MenuItem>
-                        );
-                      })}
-                    </Field>
-                  </Grid>
+
                   {/* <Grid item xs={12} lg={6}>
                     <Field
                       name="sub_parent_id"
@@ -291,4 +308,4 @@ const EditCategoryForm = () => {
     </Formik>
   );
 };
-export default EditCategoryForm;
+export default EditCollection;

@@ -1,0 +1,687 @@
+{
+	"info": {
+		"_postman_id": "e59c4bc8-062b-4627-aa29-7d8634a4d1b1",
+		"name": "loofer api collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12084011"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "apijob",
+							"type": "text"
+						},
+						{
+							"key": "location",
+							"value": "apilocation",
+							"type": "text"
+						},
+						{
+							"key": "job_type",
+							"value": "apiphp",
+							"type": "text"
+						},
+						{
+							"key": "experience",
+							"value": "1 year",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "200000",
+							"type": "text"
+						},
+						{
+							"key": "opening",
+							"value": "3",
+							"type": "text"
+						},
+						{
+							"key": "job_detail",
+							"value": "test ",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/Users/HP/Downloads/test.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost/job-portal/api/post-job",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"job-portal",
+						"api",
+						"post-job"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "category add",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "586|lTAwyRw9Ofhr040xN5ql1fTUkMwjLSG5ZHLjpzqzb5c8d59d",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "test category ",
+							"type": "text"
+						},
+						{
+							"key": "slug",
+							"value": "test categort",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/Users/HP/Downloads/20231023_154144.jpg"
+						},
+						{
+							"key": "id",
+							"value": "41",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "https://loofer.bellazza.in/api/admin/categories",
+					"protocol": "https",
+					"host": [
+						"loofer",
+						"bellazza",
+						"in"
+					],
+					"path": [
+						"api",
+						"admin",
+						"categories"
+					]
+				},
+				"description": "category delete "
+			},
+			"response": []
+		},
+		{
+			"name": "category list ",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "586|lTAwyRw9Ofhr040xN5ql1fTUkMwjLSG5ZHLjpzqzb5c8d59d",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://loofer.bellazza.in/api/admin/categories",
+					"protocol": "https",
+					"host": [
+						"loofer",
+						"bellazza",
+						"in"
+					],
+					"path": [
+						"api",
+						"admin",
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update category",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "586|lTAwyRw9Ofhr040xN5ql1fTUkMwjLSG5ZHLjpzqzb5c8d59d",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "test category  update",
+							"type": "text"
+						},
+						{
+							"key": "slug",
+							"value": "test categort update",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "test update",
+							"type": "text"
+						},
+						{
+							"key": "id",
+							"value": "41",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "https://loofer.bellazza.in/api/admin/categories/update/43",
+					"protocol": "https",
+					"host": [
+						"loofer",
+						"bellazza",
+						"in"
+					],
+					"path": [
+						"api",
+						"admin",
+						"categories",
+						"update",
+						"43"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete category",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "586|lTAwyRw9Ofhr040xN5ql1fTUkMwjLSG5ZHLjpzqzb5c8d59d",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://loofer.bellazza.in/api/admin/categories/36",
+					"protocol": "https",
+					"host": [
+						"loofer",
+						"bellazza",
+						"in"
+					],
+					"path": [
+						"api",
+						"admin",
+						"categories",
+						"36"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user status ",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "586|lTAwyRw9Ofhr040xN5ql1fTUkMwjLSG5ZHLjpzqzb5c8d59d",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"status\": 1}"
+				},
+				"url": {
+					"raw": "https://loofer.bellazza.in/api/admin/user_status/70",
+					"protocol": "https",
+					"host": [
+						"loofer",
+						"bellazza",
+						"in"
+					],
+					"path": [
+						"api",
+						"admin",
+						"user_status",
+						"70"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "login",
+							"value": "sj@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "sj@gmail.com",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "mobile",
+							"value": "7656565456",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://loofer.bellazza.in/api/login",
+					"protocol": "https",
+					"host": [
+						"loofer",
+						"bellazza",
+						"in"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get banners",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "584|Rghp95KrgJX5nIJFEmZyXmocpr1Npj7BOL5K53Lh08c50eb9",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://loofer.bellazza.in/api/admin/banners",
+					"protocol": "https",
+					"host": [
+						"loofer",
+						"bellazza",
+						"in"
+					],
+					"path": [
+						"api",
+						"admin",
+						"banners"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "faq list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://loofer.bellazza.in/api/faq?faq_cat_id=1",
+					"protocol": "https",
+					"host": [
+						"loofer",
+						"bellazza",
+						"in"
+					],
+					"path": [
+						"api",
+						"faq"
+					],
+					"query": [
+						{
+							"key": "faq_cat_id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "faq category list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://loofer.bellazza.in/api/faq-cat-list",
+					"protocol": "https",
+					"host": [
+						"loofer",
+						"bellazza",
+						"in"
+					],
+					"path": [
+						"api",
+						"faq-cat-list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add faq",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "faq cat new",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://loofer.bellazza.in/api/add-faq-cat",
+					"protocol": "https",
+					"host": [
+						"loofer",
+						"bellazza",
+						"in"
+					],
+					"path": [
+						"api",
+						"add-faq-cat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search ",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "name",
+						"value": "test",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Poco M3",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://loofer.bellazza.in/api/search",
+					"protocol": "https",
+					"host": [
+						"loofer",
+						"bellazza",
+						"in"
+					],
+					"path": [
+						"api",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user delete",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "586|lTAwyRw9Ofhr040xN5ql1fTUkMwjLSG5ZHLjpzqzb5c8d59d",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://loofer.bellazza.in/api/admin/delete_user/69",
+					"protocol": "https",
+					"host": [
+						"loofer",
+						"bellazza",
+						"in"
+					],
+					"path": [
+						"api",
+						"admin",
+						"delete_user",
+						"69"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add user ",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "586|lTAwyRw9Ofhr040xN5ql1fTUkMwjLSG5ZHLjpzqzb5c8d59d",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "sanjay test",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "sjadmin@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "phone",
+							"value": "7688787878",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://loofer.bellazza.in/api/admin/add_user",
+					"protocol": "https",
+					"host": [
+						"loofer",
+						"bellazza",
+						"in"
+					],
+					"path": [
+						"api",
+						"admin",
+						"add_user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://loofer.bellazza.in/api/edit-collection/5",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "701|mvp7G3qtIGGcf5GVzAYtV9wEu2WeqfHYqg1Jhh0Y511c1c79",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "Helloo",
+							"type": "text"
+						},
+						{
+							"key": "url",
+							"value": "http://google.com",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/Users/MITHUN/OneDrive/Desktop/digital_camera_photo-1080x675.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://loofer.bellazza.in/api/edit-collection/5",
+					"protocol": "https",
+					"host": [
+						"loofer",
+						"bellazza",
+						"in"
+					],
+					"path": [
+						"api",
+						"edit-collection",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://loofer.bellazza.in/api/admin/edit-shop-event/9",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "url",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://loofer.bellazza.in/api/admin/edit-shop-event/9",
+					"protocol": "https",
+					"host": [
+						"loofer",
+						"bellazza",
+						"in"
+					],
+					"path": [
+						"api",
+						"admin",
+						"edit-shop-event",
+						"9"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
