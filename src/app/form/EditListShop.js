@@ -65,7 +65,7 @@ const EditListShop = () => {
     formData.append('url', values.url);
 
     formData.append('image', values.image);
-    // formData.append("sub_parent_id", values.sub_parent_id);
+
 
     try {
       const formData = new FormData();
