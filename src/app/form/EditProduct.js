@@ -9,6 +9,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { makeAtrribute } from 'app/utils/utils';
 
 const EditProduct = () => {
   const Navigate = useNavigate();
@@ -218,7 +219,7 @@ const EditProduct = () => {
       });
   };
 
-  console.log("EditData", editData);
+  console.log("dataArray", dataArray);
   return (
     <Formik
       key={editData?.id || 'new'}
@@ -499,9 +500,17 @@ const EditProduct = () => {
                       <option value="">Select</option>
                       {dataArray.map((map) => {
                         return (
-                          <option value={map.id}>
-                            {map.name} ({map?.parent?.name})
-                          </option>
+                          map.child.length>0 ? 
+                          ( map.child.map(e=>
+                            <option value={map.id}>
+                              {e.name} ({map.name}) {map?.parent?.name ? `(${map.parent.name})` : null}
+                            </option>)
+                          )
+                          :(
+                            <option value={map.id}>
+                              {map.name} {map?.parent?.name ? `(${map.parent.name})` : null}
+                            </option>
+                          )
                         );
                       })}
 

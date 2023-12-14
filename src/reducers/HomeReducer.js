@@ -594,6 +594,7 @@ export const createCollectionDispatch = (bodyData) => async (dispatch) => {
           icon: "success",
         }).then(() => {
 			window.location.href="/dashboard/add-collection-list"
+      dispatch(createCategorySuccess(data));
 		});
       } else if (data.status === 422) {
         return data.json().then((responseData) => {
@@ -606,7 +607,7 @@ export const createCollectionDispatch = (bodyData) => async (dispatch) => {
           throw new Error(responseData.message);
         });
       }
-      dispatch(createCategorySuccess(data));
+      
     });
 
     // setLoading(false);

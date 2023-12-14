@@ -69,11 +69,9 @@ const EditListShop = () => {
 
     try {
       const formData = new FormData();
-      formData.append('name', values.name);
-      formData.append('slug', values.slug);
-      formData.append('description', values.description);
-      formData.append('parent_id', values.parent_id);
+      formData.append('title', values.title);
       formData.append('image', values.image);
+      formData.append('url', values.url);
 
       const config = {
         // method:'POST',
@@ -87,8 +85,8 @@ const EditListShop = () => {
         .then((res) => {
           if (res.status == 200) {
             Swal.fire({
-              title: 'Category Status',
-              text: 'Category Edited successfully',
+              title: 'Edit List Shop Status',
+              text: 'List Shop Event Updated successfully',
               icon: 'success'
             });
             setTimeout(() => {
@@ -96,7 +94,7 @@ const EditListShop = () => {
             }, 1000);
           } else {
             Swal.fire({
-              title: 'Category Status',
+              title: 'Edit List Shop Status',
               text: 'You are not authorized as admin',
               icon: 'error'
             });

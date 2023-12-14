@@ -52,7 +52,7 @@ export default function ProductTable() {
       width: 150,
       editable: true,
       sortable: false,
-      valueGetter: (params) => `${params.row.category || ''}`
+      valueGetter: (params) => `${params.row.type}`
     },
     {
       field: 'description',
@@ -88,14 +88,6 @@ export default function ProductTable() {
       width: 160,
       valueGetter: (params) => `${params.row.features_image || ''}`,
       renderCell: (params) => <img src={params.row.features_image} width={50} height={50} />
-    },
-    {
-      field: 'category_id',
-      headerName: 'Category id',
-      description: 'This column has a value getter and is not sortable.',
-      sortable: false,
-      width: 160,
-      valueGetter: (params) => `${params.row.category_id || ''}`
     },
 
     {
@@ -212,6 +204,8 @@ export default function ProductTable() {
       .catch((err) => {
         console.error({ err });
       });
+      
+    
   };
 
   const mapCategoryDataToRows = (data) => {
@@ -222,14 +216,14 @@ export default function ProductTable() {
 		
         id: category?.id || Math.floor(new Date().getTime()),
         name: category?.name,
+        product_category: category?.type,
         offer_price: category?.offer_price,
-        product_type: category?.product_type,
         price: category?.price,
         quantity: category?.quantity,
         description: category?.description,
-        image_url: category.image_url,
-        sku: category.sku,
-        actions:category.id
+        image_url: category?.image_url,
+        sku: category?.sku,
+        actions:category?.id,
         // Map other properties as needed
       }));
     } else {
@@ -241,7 +235,6 @@ export default function ProductTable() {
   console.log(productInfo);
   return (
     <Box sx={{ height: 400, width: "100%" }}>
-      {console.log(productInfo, "productInfo")}
       <DataGrid
         // rows={productInfo}
         rows={productInfo?.length > 0 ? productInfo : rows}

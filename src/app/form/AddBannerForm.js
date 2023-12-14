@@ -8,8 +8,9 @@ import { json } from "react-router-dom";
 import { values } from "lodash";
 
 const AddBannerForm = () => {
-  const [description, setDescription] = useState("");
-  const [file, setFile] = useState(null);
+  const data = localStorage.getItem("editbanner");
+  const [description, setDescription] = useState(data?.description);
+  const [file, setFile] = useState(data?.image);
 
   const [bannerArray, setBannerArray] = useState(
     JSON.parse(String(localStorage.getItem("editBanner"))) || null

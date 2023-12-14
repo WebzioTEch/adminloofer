@@ -8,30 +8,68 @@ import axios from 'axios';
 import { useState } from 'react';
 
 const columns = [
-	{ field: 'id', headerName: 'ID', width: 90 },
-	{
-		field: 'name',
-		headerName: 'Name',
-		width: 150,
-		editable: true
-	},
-	{
-		field: 'email',
-		headerName: 'Email',
-		width: 150,
-		editable: true
-	},
-	{
-		field: 'created_at',
-		headerName: 'Created At',
-		type: 'number',
-		width: 110,
-		editable: true
-	},
+  { field: 'id', headerName: 'ID', width: 90 },
+  {
+    field: 'name',
+    headerName: 'Name',
+    width: 150,
+    editable: true
+  },
+  {
+    field: 'email',
+    headerName: 'Email',
+    width: 150,
+    editable: true
+  },
+  {
+    field: 'created_at',
+    headerName: 'Created At',
+    type: 'number',
+    width: 110,
+    editable: true
+  },
+  {
+    field: 'mobile',
+    headerName: 'Mobile',
+    type: 'number',
+    width: 110,
+    editable: true
+  },
+  {
+    field: 'gender',
+    headerName: 'Gender',
+    type: 'number',
+    width: 110,
+    editable: true
+  },
+  {
+    field: '',
+    headerName: 'Block/Unblock',
+    width: 300,
+    editable: true,
+    // renderCell: () => {
+    //   return (
+    //     <Box style={{ display: 'flex', justifyContent: 'space-between' }}>
+    //       <Button
+    //         variant="contained"
+    //         color="primary"
+    //         style={{ marginLeft: 10 }}
+    //         onClick={() => {
+              
+    //         }}
+    //       >
+    //         Block/Unblock
+    //       </Button>
+    //     </Box>
+    //   );
+    // }
+  }
 ];
 
 const rows = [
-	{ id: 1, name: 'Snow', email: 'Jon', created_at: 35 },
+  { id: 1, name: 'Snow', email: 'Jon', created_at: 35, gender: 'Male', mobile: 1234567890 },
+  { id: 2, name: 'Snow', email: 'Jon', created_at: 35, gender: 'Male', mobile: 1234567890 },
+  { id: 3, name: 'Snow', email: 'Jon', created_at: 35 , gender: "Male", mobile: 1234567890},
 ];
 
 export default function DataGridD() {
@@ -50,11 +88,8 @@ export default function DataGridD() {
 			}
 		};
 
-			fetch('https://loofer.bellazza.in/api/admin/all_users',{
-				headers: {
-					'Authorization': `Bearer ${localStorage.getItem("token")}`
-				}
-			}).then(response => response.json())
+			fetch('https://loofer.bellazza.in/api/admin/all_users',config)
+				.then(response => response.json())
 				.then(res => {
 					console.log(res,'res reeees')
 					let customer=[];
@@ -82,7 +117,8 @@ export default function DataGridD() {
 			email: category?.email,
 			
 			created_at: new Date(category.created_at).toDateString(),
-			// Map other properties as needed
+			gender: category?.gender,
+			mobile: category?.mobile,
 		  }));
 		} else {
 		  return [
@@ -90,12 +126,13 @@ export default function DataGridD() {
 		  ];
 		}
 	  };
-	var rows = mapCategoryDataToRows(customerInfo);
+	// var rows = mapCategoryDataToRows(customerInfo);
+	console.log("dataGrid", customerInfo);
 	return (
 		<Box sx={{ height: 400, width: '100%' }}>
 			{/* {console.log(customerInfo,'customerInfo')} */}
 			<DataGrid
-				rows={customerInfo.length ? customerInfo : rows}
+				rows={customerInfo.length>0 ? customerInfo : rows}
 				columns={columns}
 				getRowId={(row) => row.id || 2 }
 				// initialState={{

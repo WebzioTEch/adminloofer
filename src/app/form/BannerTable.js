@@ -172,7 +172,7 @@ export default function BannerTable() {
   onClick={(event) => {
     localStorage.setItem('editBanner', JSON.stringify(cellValues?.row))
     setTimeout(() => {
-      navigate('/dashboard/addbanner')
+      navigate('/dashboard/editbanner')
     }, 2000);
   }}
 >
@@ -189,41 +189,6 @@ export default function BannerTable() {
 
   return (
     <Box sx={{ height: 400, width: "100%" }}>
-      <Grid item xs={12} lg={6}>
-        <input
-          name="image"
-          type="file"
-          value={undefined}
-          onChange={onImageChange}
-          style={{
-            padding: 10,
-            width: "100%",
-            borderRadius: 5,
-            border: "1px solid",
-            marginTop: 10,
-          }}
-          inputProps={{
-            style: { padding: 12 },
-          }}
-        />
-      </Grid>
-      <Grid item xs={12} lg={6}>
-        <input
-          name="description"
-          type="text"
-          onChange={(event) => setDescription(event.target.value)}
-          style={{
-            padding: 10,
-            width: "100%",
-            borderRadius: 5,
-            border: "1px solid",
-            marginTop: 10,
-          }}
-          inputProps={{
-            style: { padding: 12 },
-          }}
-        />
-      </Grid>
       <Grid item xs={12} lg={3}>
         <Button
           type="button"

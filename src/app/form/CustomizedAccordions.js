@@ -82,75 +82,72 @@ var value ={
   };
 
   const columns = [
-	{ field: "id", headerName: "ID", width: 90 },
-	
-	{
-	  field: "question",
-	  headerName: "Question",
-	  width: 150,
-	  editable: true,
-    
-	},
-	{
-	  field: "answer",
-	  headerName: "Answer",
-	  
-	  width: 110,
-	  editable: true,
-	},
-	{
-	  field: "editFaq",
-	  headerName: "Edit FAQ",
-	  description: "This column has a value getter and is not sortable.",
-	  sortable: false,
-	  width: 160,
-	  renderCell: (params) => (
-		
-		<Button
-		
-		onClick={(e) => { 
-      formData.append('_method', "PUT")
-      const config = {
-        method:"POST",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: formData
-      };
-        fetch("https://loofer.bellazza.in/api/admin/faq/"+params.id, config)
-        .then((res) => {
-          let faq = [];
-          if (res.status === 200) {
-            Swal.fire('Success', 'Edit success full', 'success')
-          }
-        })
-        .catch((err) => {
-          console.error({ err });
-        });
-     }}
-		  style={{ backgroundColor: 'lightblue', border: 'none', cursor: 'pointer' }}
-		>
-		  Edit
-		</Button>
-	  ),
-	},
-	{
-	  field: "deleteFaq",
-	  headerName: "Delete FAQ",
-	  description: "This column has a value getter and is not sortable.",
-	  sortable: false,
-	  width: 160,
-	  renderCell: (params) => (
-		<Button
-		variant="contained"
-		color="primary"
-		  onClick={() => handleDeleteClick(params.row.id)}
-		  style={{ backgroundColor: 'salmon', border: 'none', cursor: 'pointer' }}
-		>
-		  Delete
-		</Button>
-	  ),
-	},
+    { field: 'id', headerName: 'ID', width: 90 },
+    { field: 'faq_cat_id', headerName: 'Faq_Cat_Id', width: 90 },
+    {
+      field: 'question',
+      headerName: 'Question',
+      width: 150,
+      editable: true
+    },
+    {
+      field: 'answer',
+      headerName: 'Answer',
+
+      width: 110,
+      editable: true
+    },
+    {
+      field: 'editFaq',
+      headerName: 'Edit FAQ',
+      description: 'This column has a value getter and is not sortable.',
+      sortable: false,
+      width: 160,
+      renderCell: (params) => (
+        <Button
+          onClick={(e) => {
+            formData.append('_method', 'PUT');
+            const config = {
+              method: 'POST',
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+              },
+              body: formData
+            };
+            fetch('https://loofer.bellazza.in/api/admin/faq/' + params.id, config)
+              .then((res) => {
+                let faq = [];
+                if (res.status === 200) {
+                  Swal.fire('Success', 'Edit success full', 'success');
+                }
+              })
+              .catch((err) => {
+                console.error({ err });
+              });
+          }}
+          style={{ backgroundColor: 'lightblue', border: 'none', cursor: 'pointer' }}
+        >
+          Edit
+        </Button>
+      )
+    },
+    {
+      field: 'deleteFaq',
+      headerName: 'Delete FAQ',
+      description: 'This column has a value getter and is not sortable.',
+      sortable: false,
+      width: 160,
+      renderCell: (params) => (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => handleDeleteClick(params.row.id)}
+          style={{ backgroundColor: 'salmon', border: 'none', cursor: 'pointer' }}
+        >
+          Delete
+        </Button>
+      )
+    }
   ];
 
   
@@ -263,16 +260,17 @@ var value ={
 		id: category?.id||Math.floor(new Date().getTime()),
 		question: category?.question,
 		answer: category?.answer,
+    faq_cat_id: category?.faq_cat_id
 	  }));
 	} else {
 	  return [
-		{ id: 1, name: 'Snow', slug: 'Jon', age: 35, parent: "0"},
+		{ id: 1, faq_cat_id:"5", name: 'Snow', slug: 'Jon', age: 35, parent: "0"},
 	  ];
 	}
   };
   
   var rows = mapCategoryDataToRows(faqInfo);
-
+  console.log("faqInfo", faqInfo);
   return (
     <div>
       {successMessage && (
