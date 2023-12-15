@@ -13,6 +13,7 @@ const AddCustomerForm = () => {
     formData.append("email", values.email);
     formData.append("password", values.password);
     formData.append("phone", values.mobile);
+    formData.append("gender", values.gender);
 
     const requestOptions = {
       method: "POST",
@@ -47,6 +48,7 @@ const AddCustomerForm = () => {
         email: "",
         password: "",
         mobile: "",
+        gender:""
       }}
       onSubmit={(e) => {
         // e.preventDefault()
@@ -63,9 +65,9 @@ const AddCustomerForm = () => {
               <Box
                 style={{
                   boxShadow:
-                    "rgba(0, 0, 0, 0.06) 0px 3px 3px -2px, rgba(0, 0, 0, 0.04) 0px 3px 4px 0px, rgba(0, 0, 0, 0.04) 0px 1px 8px 0px",
+                    'rgba(0, 0, 0, 0.06) 0px 3px 3px -2px, rgba(0, 0, 0, 0.04) 0px 3px 4px 0px, rgba(0, 0, 0, 0.04) 0px 1px 8px 0px',
                   padding: 30,
-                  background: "white",
+                  background: 'white'
                 }}
               >
                 <h2>Add New Customer</h2>
@@ -78,13 +80,13 @@ const AddCustomerForm = () => {
                       placeHolder="Name"
                       style={{
                         padding: 10,
-                        width: "100%",
+                        width: '100%',
                         borderRadius: 5,
-                        border: "1px solid",
-                        marginTop: 10,
+                        border: '1px solid',
+                        marginTop: 10
                       }}
                       inputProps={{
-                        style: { padding: 12 },
+                        style: { padding: 12 }
                       }}
                     />
                   </Grid>
@@ -96,13 +98,13 @@ const AddCustomerForm = () => {
                       placeHolder="Email"
                       style={{
                         padding: 10,
-                        width: "100%",
+                        width: '100%',
                         borderRadius: 5,
-                        border: "1px solid",
-                        marginTop: 10,
+                        border: '1px solid',
+                        marginTop: 10
                       }}
                       inputProps={{
-                        style: { padding: 12 },
+                        style: { padding: 12 }
                       }}
                     />
                   </Grid>
@@ -113,13 +115,13 @@ const AddCustomerForm = () => {
                       placeHolder="Password"
                       style={{
                         padding: 10,
-                        width: "100%",
+                        width: '100%',
                         borderRadius: 5,
-                        border: "1px solid",
-                        marginTop: 10,
+                        border: '1px solid',
+                        marginTop: 10
                       }}
                       inputProps={{
-                        style: { padding: 12 },
+                        style: { padding: 12 }
                       }}
                     />
                   </Grid>
@@ -130,27 +132,51 @@ const AddCustomerForm = () => {
                       placeHolder="Mobile"
                       style={{
                         padding: 10,
-                        width: "100%",
+                        width: '100%',
                         borderRadius: 5,
-                        border: "1px solid",
-                        marginTop: 10,
+                        border: '1px solid',
+                        marginTop: 10
                       }}
                       inputProps={{
-                        style: { padding: 12 },
+                        style: { padding: 12 }
                       }}
                     />
+                  </Grid>
+
+                  <Grid item xs={12} lg={6}>
+                    <Field
+                      name="gender"
+                      as="select"
+                      style={{
+                        padding: 10,
+                        width: '100%',
+                        borderRadius: 5,
+                        border: '1px solid',
+                        marginTop: 10
+                      }}
+                      inputProps={{
+                        style: { padding: 12 }
+                      }}
+                    >
+                      <option value="" label="Gender" />
+                      <option value="male" label="Male" />
+                      <option value="female" label="Female" />
+                    </Field>
+                    {errors.gender && (
+                      <div style={{ color: 'red', marginTop: '5px' }}>{errors.gender}</div>
+                    )}
                   </Grid>
 
                   <Grid item xs={12} lg={3}>
                     <Button
                       type="submit"
                       style={{
-                        background: "red",
-                        color: "white",
+                        background: 'red',
+                        color: 'white',
                         marginTop: 30,
                         // padding: 16,
                         borderRadius: 5,
-                        width: "100%",
+                        width: '100%'
                       }}
                     >
                       Proceed

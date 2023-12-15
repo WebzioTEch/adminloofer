@@ -192,18 +192,12 @@ const EditProduct = () => {
         console.error({ err });
       });
 
-    fetch(`https://loofer.bellazza.in/api/admin/get_all_attributes`, config)
+    fetch(`https://loofer.bellazza.in/api/get_all_category`)
       .then((response) => response.json())
       .then((res) => {
-        console.log(res, 'res reeees');
-        let product = [];
+
         if (res) {
-          res.data.map((val) => {
-            if (val?.type == 'size') {
-              product.push(val);
-            }
-          });
-          setAttributes(product);
+          setAttributes(res.categories);
 
           console.log({ res });
         } else {
@@ -498,7 +492,7 @@ const EditProduct = () => {
                       }}
                     >
                       <option value="">Select</option>
-                      {dataArray.map((map) => {
+                      {attributes.map((map) => {
                         return (
                           map.child.length>0 ? 
                           ( map.child.map(e=>

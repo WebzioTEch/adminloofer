@@ -178,34 +178,25 @@ const ProfileForm = () => {
     });
 
 
-    fetch(`https://loofer.bellazza.in/api/admin/get_all_attributes`, config)
-    .then((response) => response.json())
-    .then((res) => {
-      console.log(res, "res reeees");
-      let product = [];
-      if (res) {
-        res.data.map((val) => {
-          if(val?.type=="size"){
-            product.push(val);
-          }
-         
-        });
-        setAttributes(product);
+    fetch(`https://loofer.bellazza.in/api/get_all_category`)
+      .then((response) => response.json())
+      .then((res) => {
 
-        console.log({ res });
-      } else {
-        Swal.fire({
-          title: "Attribute Status",
-          text: "You are not authorized as admin",
-          icon: "error",
-        });
-      }
-    })
-    .catch((err) => {
-      console.error({ err });
-    });
+        if (res) {
+          setAttributes(res.categories);
+        } else {
+          Swal.fire({
+            title: 'Attribute Status',
+            text: 'You are not authorized as admin',
+            icon: 'error'
+          });
+        }
+      })
+      .catch((err) => {
+        console.error({ err });
+      });
   };
-
+  console.log("attributes", attributes);
 return (
   <Formik
     initialValues={{

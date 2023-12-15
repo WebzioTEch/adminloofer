@@ -47,22 +47,22 @@ const columns = [
     headerName: 'Block/Unblock',
     width: 300,
     editable: true,
-    // renderCell: () => {
-    //   return (
-    //     <Box style={{ display: 'flex', justifyContent: 'space-between' }}>
-    //       <Button
-    //         variant="contained"
-    //         color="primary"
-    //         style={{ marginLeft: 10 }}
-    //         onClick={() => {
-              
-    //         }}
-    //       >
-    //         Block/Unblock
-    //       </Button>
-    //     </Box>
-    //   );
-    // }
+    renderCell: (params) => {
+      return (
+        <Box style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <button
+            variant="contained"
+            color="primary"
+            style={{ marginLeft: 10 , borderRadious: "50px", cursor:"pointer"}}
+            onClick={(s) => {
+				
+            }}
+          >
+            Block
+          </button>
+        </Box>
+      );
+    }
   }
 ];
 
@@ -77,7 +77,7 @@ export default function DataGridD() {
 	const initialEditedData = {};
 	const dispatch = useDispatch(); 
 	const [customerInfo,setCustomerInfo] = useState([])
-
+	const [block, setBlock] = useState("");
 	useEffect(()=>{
 		console.log(localStorage.getItem("token"),"customer token")
 		// dispatch(showCustomerDispatch());

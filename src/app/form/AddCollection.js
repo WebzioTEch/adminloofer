@@ -70,9 +70,7 @@ const AddCollectionForm = () => {
             
           });
           setDataArray(product);
-          
-
-          console.log({ res });
+        }else{
           
         }
         

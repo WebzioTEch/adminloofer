@@ -478,7 +478,7 @@ export const { createCategory, createCategorySuccess, createCategoryFail } =
   actions;
 export const createCategoryDispatch = (bodyData) => async (dispatch) => {
   try {
-    //dispatch(createCategory());
+    dispatch(createCategory());
     const requestOptions = {
       method: "POST",
       headers: {
@@ -526,7 +526,7 @@ export const createCategoryDispatch = (bodyData) => async (dispatch) => {
 
 export const createListShopDispatch = (bodyData) => async (dispatch) => {
   try {
-    //dispatch(createCategory());
+    dispatch(createCategory());
     const requestOptions = {
       method: "POST",
       headers: {
@@ -575,7 +575,7 @@ export const createListShopDispatch = (bodyData) => async (dispatch) => {
 
 export const createCollectionDispatch = (bodyData) => async (dispatch) => {
   try {
-    //dispatch(createCategory());
+    dispatch(createCategory());
     const requestOptions = {
       method: "POST",
       headers: {
