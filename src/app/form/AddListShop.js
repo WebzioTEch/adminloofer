@@ -29,6 +29,7 @@ const AddListShopForm = () => {
     fetchData();
   }, []);
 
+  
   const handleFormSubmit = (values, index) => {
     const formData = new FormData();
     formData.append("title", values.title);
@@ -40,15 +41,25 @@ const AddListShopForm = () => {
     dispatch(createListShopDispatch(formData));
     console.log(values);
   };
-
+  const isValidUrl = (url) => {
+    try {
+      new URL(url);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  };
   // Define validation schema using Yup
   const validationSchema = Yup.object().shape({
-    title: Yup.string().required("Title is required"),
-    url: Yup.string().required("Url is required"),
-
-    image: Yup.string().required("Image URL is required"),
-    // .url('Invalid URL')
+    title: Yup.string().required('Title is required'),
+    url: Yup.string().test('is-url-valid', 'URL is not valid', (value) => isValidUrl(value)),
+    image: Yup.string().required('Image is required')
   });
+
+
+
+
+
 
   const fetchData = () => {
     const config = {
@@ -87,9 +98,7 @@ const AddListShopForm = () => {
       initialValues={{
         title: "",
         url: "",
-       
         image: "",
-        // sub_parent_id:""
       }}
       onSubmit={(e) => {
         // e.preventDefault()
@@ -108,9 +117,9 @@ const AddListShopForm = () => {
               <Box
                 style={{
                   boxShadow:
-                    "rgba(0, 0, 0, 0.06) 0px 3px 3px -2px, rgba(0, 0, 0, 0.04) 0px 3px 4px 0px, rgba(0, 0, 0, 0.04) 0px 1px 8px 0px",
+                    'rgba(0, 0, 0, 0.06) 0px 3px 3px -2px, rgba(0, 0, 0, 0.04) 0px 3px 4px 0px, rgba(0, 0, 0, 0.04) 0px 1px 8px 0px',
                   padding: 30,
-                  background: "white",
+                  background: 'white'
                 }}
               >
                 <h2>Add New List Shop</h2>
@@ -123,20 +132,18 @@ const AddListShopForm = () => {
                       placeholder="Title"
                       style={{
                         padding: 10,
-                        width: "100%",
+                        width: '100%',
                         borderRadius: 5,
-                        border: errors.title ? "2px solid red" : "1px solid",
-                        marginTop: 10,
+                        border: errors.title ? '2px solid red' : '1px solid',
+                        marginTop: 10
                       }}
                       inputProps={{
-                        style: { padding: 12 },
+                        style: { padding: 12 }
                       }}
                     />
                     <br />
                     {errors.name ? (
-                      <span style={{ color: "red", fontSize: 12 }}>
-                        {errors.title}
-                      </span>
+                      <span style={{ color: 'red', fontSize: 12 }}>{errors.title}</span>
                     ) : null}
                   </Grid>
                   <Grid item xs={12} lg={6}>
@@ -146,23 +153,21 @@ const AddListShopForm = () => {
                       placeholder="https:// or http://"
                       style={{
                         padding: 10,
-                        width: "100%",
+                        width: '100%',
                         borderRadius: 5,
-                        border: errors.slug ? "2px solid red" : "1px solid",
-                        marginTop: 10,
+                        border: errors.url ? '2px solid red' : '1px solid',
+                        marginTop: 10
                       }}
                       inputProps={{
-                        style: { padding: 12 },
+                        style: { padding: 12 }
                       }}
                     />
                     <br />
-                    {errors.slug ? (
-                      <span style={{ color: "red", fontSize: 12 }}>
-                        {errors.slug}
-                      </span>
+                    {errors.url ? (
+                      <span style={{ color: 'red', fontSize: 12 }}>{errors.url}</span>
                     ) : null}
                   </Grid>
-                 
+
                   {/* <Grid item xs={12} lg={6}>
                     <Field
                       name="sub_parent_id"
@@ -196,27 +201,22 @@ const AddListShopForm = () => {
                       placeholder="Image"
                       onChange={(event) => {
                         // Set the selected image file in Formik's values
-                        formik.setFieldValue(
-                          "image",
-                          event.currentTarget.files[0]
-                        );
+                        formik.setFieldValue('image', event.currentTarget.files[0]);
                       }}
                       style={{
                         padding: 10,
-                        width: "100%",
+                        width: '100%',
                         borderRadius: 5,
-                        border: errors.image ? "2px solid red" : "1px solid",
-                        marginTop: 10,
+                        border: errors.image ? '2px solid red' : '1px solid',
+                        marginTop: 10
                       }}
                       inputProps={{
-                        style: { padding: 12 },
+                        style: { padding: 12 }
                       }}
                     />
                     <br />
                     {errors.image ? (
-                      <span style={{ color: "red", fontSize: 12 }}>
-                        {errors.image}
-                      </span>
+                      <span style={{ color: 'red', fontSize: 12 }}>{errors.image}</span>
                     ) : null}
                   </Grid>
                   <Grid item xs={12} lg={6}></Grid>
@@ -224,12 +224,12 @@ const AddListShopForm = () => {
                     <Button
                       type="submit"
                       style={{
-                        backgroundColor: "red",
-                        color: "white",
+                        backgroundColor: 'red',
+                        color: 'white',
                         marginTop: 30,
                         // padding: 16,
                         borderRadius: 5,
-                        width: "100%",
+                        width: '100%'
                       }}
                     >
                       Save

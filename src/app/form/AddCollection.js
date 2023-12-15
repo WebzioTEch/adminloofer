@@ -42,13 +42,19 @@ const AddCollectionForm = () => {
     console.log(values);
   };
 
+  const isValidUrl = (url) => {
+    try {
+      new URL(url);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  };
   // Define validation schema using Yup
   const validationSchema = Yup.object().shape({
-    title: Yup.string().required("Title is required"),
-    url: Yup.string().required("Url is required"),
-
-    image: Yup.string().required("Image URL is required"),
-    // .url('Invalid URL')
+    title: Yup.string().required('Title is required'),
+    url: Yup.string().test('is-url-valid', 'URL is not valid', (value) => isValidUrl(value)),
+    image: Yup.string().required('Image is required')
   });
 
   const fetchData = () => {
@@ -80,7 +86,7 @@ const AddCollectionForm = () => {
       });
   
   };
-
+  console.log("first")
   return (
     <Formik
       initialValues={{
@@ -132,7 +138,7 @@ const AddCollectionForm = () => {
                       }}
                     />
                     <br />
-                    {errors.name ? (
+                    {errors.title ? (
                       <span style={{ color: "red", fontSize: 12 }}>
                         {errors.title}
                       </span>
@@ -155,9 +161,9 @@ const AddCollectionForm = () => {
                       }}
                     />
                     <br />
-                    {errors.slug ? (
+                    {errors.url ? (
                       <span style={{ color: "red", fontSize: 12 }}>
-                        {errors.slug}
+                        {errors.url}
                       </span>
                     ) : null}
                   </Grid>

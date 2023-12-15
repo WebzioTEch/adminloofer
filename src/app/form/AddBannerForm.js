@@ -1,6 +1,7 @@
 import React from "react";
 import { Formik, Form, Field, FieldArray } from "formik";
 import { Grid, Box, Button, Divider } from "@mui/material";
+import * as Yup from "yup"; // Import Yup for validation
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -42,6 +43,7 @@ const AddBannerForm = () => {
       },
       body: formData,
     };
+
 
     // console.log("bannerID",bannerArray.id);
 
@@ -126,17 +128,31 @@ const AddBannerForm = () => {
     // formData.append("image", fileToUpload);
      setDescription(fileToUpload?.name)
   };
-
+  const isValidUrl = (url) => {
+    try {
+      new URL(url);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  };
+  // Define validation schema using Yup
+  const validationSchema = Yup.object().shape({
+    title: Yup.string().required('Title is required'),
+    url: Yup.string().test('is-url-valid', 'URL is not valid', (value) => isValidUrl(value)),
+    image: Yup.string().required('Image is required')
+  });
   return (
     <Formik
       initialValues={{
-        image: "",
-        description: bannerArray?.description || "",
-        url:""
+        image: '',
+        description: bannerArray?.description || '',
+        url: ''
       }}
       onSubmit={(e) => {
         handleFormSubmit(e);
       }}
+      validationSchema={validationSchema}
     >
       {(formik) => {
         const { errors, setFieldValue } = formik;
@@ -146,9 +162,9 @@ const AddBannerForm = () => {
               <Box
                 style={{
                   boxShadow:
-                    "rgba(0, 0, 0, 0.06) 0px 3px 3px -2px, rgba(0, 0, 0, 0.04) 0px 3px 4px 0px, rgba(0, 0, 0, 0.04) 0px 1px 8px 0px",
+                    'rgba(0, 0, 0, 0.06) 0px 3px 3px -2px, rgba(0, 0, 0, 0.04) 0px 3px 4px 0px, rgba(0, 0, 0, 0.04) 0px 1px 8px 0px',
                   padding: 30,
-                  background: "white",
+                  background: 'white'
                 }}
               >
                 <h2>Add New Banner</h2>
@@ -159,12 +175,12 @@ const AddBannerForm = () => {
                       mt={1}
                       mb={1}
                       sx={{
-                        border: "1px dashed #E61855",
-                        background: "#FDF5F7",
+                        border: '1px dashed #E61855',
+                        background: '#FDF5F7',
                         borderRadius: 5,
-                        "& .MuiInput-underline:before": {
-                          borderBottom: "none",
-                        },
+                        '& .MuiInput-underline:before': {
+                          borderBottom: 'none'
+                        }
                       }}
                       // className={classes.upload}
                       onClick={() => fileInputRef.current.click()}
@@ -174,24 +190,23 @@ const AddBannerForm = () => {
                         alignItems="center"
                         justifyContent="center"
                         style={{
-                          padding: 62,
+                          padding: 62
                         }}
                       >
                         <Box display="flex" justifyContent="space-between">
                           <span
                             one
                             style={{
-                              color: "rgba(0, 50, 91, 0.5)",
-                              fontWeight: 600,
+                              color: 'rgba(0, 50, 91, 0.5)',
+                              fontWeight: 600
                             }}
                           >
-                            {description? description:"Drag and drop or"}
-                            
+                            {description ? description : 'Drag and drop or'}
                           </span>
                           <span
                             style={{
-                              color: "#E61855",
-                              marginLeft: 5,
+                              color: '#E61855',
+                              marginLeft: 5
                             }}
                           >
                             Browse
@@ -214,22 +229,18 @@ const AddBannerForm = () => {
                       placeholder="Description"
                       style={{
                         padding: 10,
-                        width: "100%",
+                        width: '100%',
                         borderRadius: 5,
-                        border: errors.description
-                          ? "2px solid red"
-                          : "1px solid",
-                        marginTop: 10,
+                        border: errors.description ? '2px solid red' : '1px solid',
+                        marginTop: 10
                       }}
                       inputProps={{
-                        style: { padding: 12 },
+                        style: { padding: 12 }
                       }}
                     />
                     <br />
                     {errors.description ? (
-                      <span style={{ color: "red", fontSize: 12 }}>
-                        {errors.description}
-                      </span>
+                      <span style={{ color: 'red', fontSize: 12 }}>{errors.description}</span>
                     ) : null}
                   </Grid>
                   <Grid item xs={12} lg={6}>
@@ -239,34 +250,30 @@ const AddBannerForm = () => {
                       placeholder="https:// or http://"
                       style={{
                         padding: 10,
-                        width: "100%",
+                        width: '100%',
                         borderRadius: 5,
-                        border: errors.url
-                          ? "2px solid red"
-                          : "1px solid",
-                        marginTop: 10,
+                        border: errors.url ? '2px solid red' : '1px solid',
+                        marginTop: 10
                       }}
                       inputProps={{
-                        style: { padding: 12 },
+                        style: { padding: 12 }
                       }}
                     />
                     <br />
                     {errors.url ? (
-                      <span style={{ color: "red", fontSize: 12 }}>
-                        {errors.url}
-                      </span>
+                      <span style={{ color: 'red', fontSize: 12 }}>{errors.url}</span>
                     ) : null}
                   </Grid>
                   <Grid item xs={12} lg={3}>
                     <Button
                       type="submit"
                       style={{
-                        background: "red",
-                        color: "white",
+                        background: 'red',
+                        color: 'white',
                         marginTop: 30,
                         // padding: 16,
                         borderRadius: 5,
-                        width: "100%",
+                        width: '100%'
                       }}
                     >
                       Upload

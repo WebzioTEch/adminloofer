@@ -189,7 +189,7 @@ export default function BannerTable() {
 
   return (
     <Box sx={{ height: 400, width: "100%" }}>
-      <Grid item xs={12} lg={3}>
+      {/* <Grid item xs={12} lg={3}>
         <Button
           type="button"
           style={{
@@ -203,7 +203,7 @@ export default function BannerTable() {
         >
           Get Banners
         </Button>
-      </Grid>
+      </Grid> */}
       <DataGrid
         rows={bannerInfo.length > 0 ? bannerInfo : rows}
         columns={columns}

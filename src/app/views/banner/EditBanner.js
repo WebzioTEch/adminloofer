@@ -6,6 +6,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { json } from 'react-router-dom';
 import { values } from 'lodash';
+import * as Yup from "yup"; // Import Yup for validation
 
 const EditBanner = () => {
   const [description, setDescription] = useState('');
@@ -124,6 +125,21 @@ const EditBanner = () => {
     setDescription(fileToUpload?.name);
   };
 
+  const isValidUrl = (url) => {
+    try {
+      new URL(url);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  };
+  // Define validation schema using Yup
+  const validationSchema = Yup.object().shape({
+    description: Yup.string().required('Description is required'),
+    url: Yup.string().test('is-url-valid', 'URL is not valid', (value) => isValidUrl(value)),
+    image: Yup.string().required('Image is required')
+  });
+
   return (
     <Formik
       initialValues={{
@@ -134,6 +150,7 @@ const EditBanner = () => {
       onSubmit={(e) => {
         handleFormSubmit(e);
       }}
+      validationSchema={validationSchema}
     >
       {(formik) => {
         const { errors, setFieldValue } = formik;

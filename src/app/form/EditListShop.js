@@ -114,12 +114,19 @@ const EditListShop = () => {
   };
 
   // Define validation schema using Yup
+  const isValidUrl = (url) => {
+    try {
+      new URL(url);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  };
+  // Define validation schema using Yup
   const validationSchema = Yup.object().shape({
     title: Yup.string().required('Title is required'),
-    url: Yup.string().required('Url is required'),
-
-    image: Yup.string().required('Image URL is required')
-    // .url('Invalid URL')
+    url: Yup.string().test('is-url-valid', 'URL is not valid', (value) => isValidUrl(value)),
+    image: Yup.string().required('Image is required')
   });
 
   const fetchData = () => {
@@ -225,8 +232,8 @@ const EditListShop = () => {
                       }}
                     />
                     <br />
-                    {errors.slug ? (
-                      <span style={{ color: 'red', fontSize: 12 }}>{errors.slug}</span>
+                    {errors.url ? (
+                      <span style={{ color: 'red', fontSize: 12 }}>{errors.url}</span>
                     ) : null}
                   </Grid>
 
