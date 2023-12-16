@@ -15,13 +15,10 @@ const EditProduct = () => {
   const Navigate = useNavigate();
   const dispatch = useDispatch();
   const [selectedFile, setSelectedFile] = useState(null);
-  const [dataArray, setDataArray] = useState(
-    JSON.parse(String(localStorage.getItem('category_list'))) || []
-  );
-  const [attributes, setAttributes] = useState([])
   const token = useSelector((state) => state.home.token);
   const [img, setImageData] = useState(null);
-
+  const [category, setCategory] = useState([]);
+  const [attributes, setAttributes] = useState();
 
   const [successMessage, setSuccessMessage] = useState('');
   const [formData, setFormData] = useState({
@@ -78,12 +75,65 @@ const EditProduct = () => {
   };
 
   
-
   useEffect(() => {
-    fetchData();
-  });
+    fetchAttributes();
+    fetchCat();
+  }, []);
 
-  //   const handleFormSubmit = (values, { resetForm }) => {
+  const fetchAttributes = async () => {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      };
+
+      // Fetch attributes
+      const attributesResponse = await fetch(
+        'https://loofer.bellazza.in/api/admin/get_all_attributes',
+        config
+      );
+
+      if (!attributesResponse.ok) {
+        throw new Error(`Error fetching attributes. HTTP status: ${attributesResponse.status}`);
+      }
+
+      const attributesData = await attributesResponse.json();
+
+      console.log(attributesData, 'attributes data');
+
+      if (attributesData) {
+        setAttributes(attributesData.data);
+      } else {
+        Swal.fire({
+          title: 'Category Status',
+          text: 'Failed to retrieve attributes',
+          icon: 'error'
+        });
+      }
+    } catch (err) {
+      console.error('Error fetching attributes:', err.message || err.response || err);
+    }
+  };
+  async function fetchCat() {
+    try {
+      const data = await fetch('https://loofer.bellazza.in/api/get_all_category');
+
+      if (!data.ok) {
+        // Handle non-successful response (e.g., status code other than 200)
+        throw new Error(`Failed to fetch categories. Status: ${data.status}`);
+      }
+
+      const res = await data.json();
+      setCategory(res.categories);
+    } catch (error) {
+      // Handle errors, log them, or show an alert
+      console.error('Error fetching categories:', error.message);
+      // You can also show an alert or perform other error handling actions here
+    }
+  }
+  
   const handleFormSubmit = (values, index) => {
     const timer = setTimeout(() => {
       setSuccessMessage('');
@@ -160,60 +210,9 @@ const EditProduct = () => {
     category_id: Yup.number().required('category_id is required')
   });
 
-  const fetchData = () => {
-    const config = {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
-    };
 
-    fetch(`https://loofer.bellazza.in/api/admin/categories`, config)
-      .then((response) => response.json())
-      .then((res) => {
-        console.log(res, 'res reeees');
-        let product = [];
-        if (res) {
-          res.map((val) => {
-            product.push(val);
-          });
-          setDataArray(product);
 
-          console.log({ res });
-        } else {
-          Swal.fire({
-            title: 'Category Status',
-            text: 'You are not authorized as admin',
-            icon: 'error'
-          });
-        }
-      })
-      .catch((err) => {
-        console.error({ err });
-      });
 
-    fetch(`https://loofer.bellazza.in/api/get_all_category`)
-      .then((response) => response.json())
-      .then((res) => {
-
-        if (res) {
-          setAttributes(res.categories);
-
-          console.log({ res });
-        } else {
-          Swal.fire({
-            title: 'Attribute Status',
-            text: 'You are not authorized as admin',
-            icon: 'error'
-          });
-        }
-      })
-      .catch((err) => {
-        console.error({ err });
-      });
-  };
-
-  console.log("dataArray", dataArray);
   return (
     <Formik
       key={editData?.id || 'new'}
@@ -372,8 +371,19 @@ const EditProduct = () => {
 
                       {/* <option value='4'>XL</option> */}
 
-                      {attributes?.map((map) => {
-                        return <option value={map?.id}>{map?.name}</option>;
+                      {category?.map((map) => {
+                        return map?.child?.length > 0 ? (
+                          map.child.map((e) => (
+                            <option value={map.id}>
+                              {e.name} ({map.name}){' '}
+                              {map?.parent?.name ? `(${map.parent.name})` : null}
+                            </option>
+                          ))
+                        ) : (
+                          <option value={map.id}>
+                            {map.name} {map?.parent?.name ? `(${map.parent.name})` : null}
+                          </option>
+                        );
                       })}
 
                       {/* Add more options as needed */}
@@ -491,20 +501,12 @@ const EditProduct = () => {
                         marginTop: 10
                       }}
                     >
-                      <option value="">Select</option>
-                      {attributes.map((map) => {
+                      <option value="">Select Atributes</option>
+                      {attributes?.map((map) => {
                         return (
-                          map.child.length>0 ? 
-                          ( map.child.map(e=>
-                            <option value={map.id}>
-                              {e.name} ({map.name}) {map?.parent?.name ? `(${map.parent.name})` : null}
-                            </option>)
-                          )
-                          :(
-                            <option value={map.id}>
-                              {map.name} {map?.parent?.name ? `(${map.parent.name})` : null}
-                            </option>
-                          )
+                          <option value={map.id}>
+                            {map.name} ({map?.parent?.name})
+                          </option>
                         );
                       })}
 
