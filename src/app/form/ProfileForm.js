@@ -9,7 +9,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import "./ProfileForm.css";
 
 
 
@@ -17,38 +17,36 @@ import { useNavigate } from 'react-router-dom';
 const ProfileForm = () => {
   const Navigate =useNavigate();
   const dispatch = useDispatch();
-  const [selectedFile, setSelectedFile] = useState(null);
   const [category, setCategory] = useState([])
   const [attributes, setAttributes] = useState([]);
-  const token = useSelector((state) => state.home.token);
   const [img, setImageData] = useState([]);
+
 
   const [successMessage, setSuccessMessage] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     product_type: "",
     description: "",
-    sku: "",
     price: "",
     offer_price: "",
     quantity: "",
-    category_id: "",
-    features_image: [],
+    stock:""
   });
-  const [productArray,setProductArray]=useState(
-	JSON.parse(String(localStorage.getItem("product_list")))||[]
-  );
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedOptions, setSelectedOptions] = useState([]);
 
-  // const onImageChange = e => {
-  // 	const formData = new FormData({});
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
 
-  // 	if (e.target && e.target.files[0]) {
-  // 	  formData.append('features_image', e.target.files[0])
-  // 	  // for (const value of formData.values()) {
-  // 	  setImageData(formData)
-  // 	  // }
-  // 	}
-  //   }
+  const handleCheckboxChange = (option) => {
+    const updatedSelection = selectedOptions.includes(option)
+      ? selectedOptions.filter((selectedOption) => selectedOption !== option)
+      : [...selectedOptions, option];
+
+    setSelectedOptions(updatedSelection);
+  };
+
 
   useEffect(() => {
      fetchAttributes();
@@ -110,33 +108,23 @@ const ProfileForm = () => {
   }
   
 
-//   const handleFormSubmit = (values, { resetForm }) => {
 	const handleFormSubmit = (values, index) => {
-	
-    const timer = setTimeout(() => {
-      setSuccessMessage("");
-    }, 2000);
     try {
-      // let img = values.features_image;
-      console.log(img, "img");
       const formData = new FormData();
       formData.append("name", values.name);
       formData.append("product_type", 1);
       formData.append("description", values.description);
       formData.append("price", values.price);
       formData.append("offer_price", values.offer_price);
-      formData.append("category_id[]", values.category_id);
-
-      formData.append("features_image", img);
+      formData.append('quantity', values.quantity);
+      for(let i=0; i<img.length; i++){
+        formData.append(`features_image[${i===3?4:i}]`, img[i]);
+      }
       formData.append("stock", values.stock);
-      formData.append("size", "L");
-
-      formData.append("attribute_value_id[]", values.size);
-
-
+      formData.append('attribute_value_id', selectedOptions);
+      formData.append('category_id', values.category_id);
 
       const config = {
-        // method:'POST',
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -149,23 +137,23 @@ const ProfileForm = () => {
           config
         )
         .then((res) => {
-          if(res.status==200){
-            setSuccessMessage("Product added successfully");
+          if (res.status >= 200 && res.status < 300) {
+            setSuccessMessage('Product added successfully');
+            console.log(formData, 'f');
             Swal.fire({
-              title: "Product Status",
-              text: "Product added successfully",
-              icon: "success",
-              });
-              setTimeout(() => {
-                Navigate("/dashboard/productlist")
-              }, 1000);
-            
-          }else{
+              title: 'Product Status',
+              text: 'Product added successfully',
+              icon: 'success'
+            });
+            setTimeout(() => {
+              Navigate('/dashboard/productlist');
+            }, 1000);
+          } else {
             Swal.fire({
-              title: "Product Status",
-              text: "You are not authorized as admin",
-              icon: "error",
-              });
+              title: 'Product Status',
+              text: 'You are not authorized as admin',
+              icon: 'error'
+            });
           }
           
           // resetForm();
@@ -173,53 +161,47 @@ const ProfileForm = () => {
         })
         .catch((err) => {
           console.error({ err });
+           Swal.fire({
+             title: 'Product Status',
+             text: 'Product Creation Failed',
+             icon: 'error'
+           });
         });
 
       // dispatch(createproductDispatch(formData));
     } catch (error) {
       console.error("Error:", error);
     }
-   };
+  };
 
   const validationSchema = Yup.object({
-    // email: Yup.string().email('Invalid email address').required('Email is required'),
-    name: Yup.string().required("name is required"),
-    product_type: Yup.string().required("product_type is required"),
-    description: Yup.string().required("description is required"),
-    sku: Yup.number().required("sku is required"),
-    category: Yup.string().required("category is required"),
-    price: Yup.number().required("price is required"),
-    offer_price: Yup.number().required("offer_price is required"),
-    quantity: Yup.number().required("quantity is required"),
-    category_id: Yup.number().required("category_id is required"),
+    name: Yup.string().required('name is required'),
+    product_type: Yup.string().required('product_type is required'),
+    description: Yup.string().required('description is required'),
+    stock: Yup.number().required('stock is required'),
+    price: Yup.number().required('price is required'),
+    offer_price: Yup.number().required('offer_price is required'),
+    quantity: Yup.number().required('quantity is required'),
+    // size: Yup.array().of(Yup.string()).required('Size is required')
   });
 
-
-
-  
-
+  console.log("img", img);
+  console.log("sf", selectedOptions);
 return (
   <Formik
     initialValues={{
-      // email:'',
-      name: "",
-      product_type: "",
-      description: "",
-      stock: "",
-      size: "",
-
-      category: "",
-      price: "",
-      offer_price: "",
-      quantity: "",
-      category_id: "",
-      features_image: [],
+      name: '',
+      product_type: '',
+      description: '',
+      stock: '',
+      price: '',
+      offer_price: '',
+      quantity: '',
+      category_id:'',
     }}
-    // validationSchema={validationSchema}
+    validationSchema={validationSchema}
     onSubmit={(e) => {
-      // e.preventDefault()
       for (let index = 0; index < 1; index++) {
-        // const element = array[index];
         handleFormSubmit(e, index);
       }
     }}
@@ -337,10 +319,10 @@ return (
                     style={{ color: 'red', fontSize: 12 }}
                   />
                 </Grid>
-                {console.log('attributes', attributes)}
+
                 <Grid item xs={12} lg={6}>
                   <Field
-                    name="size"
+                    name="category_id"
                     as="select"
                     style={{
                       padding: 10,
@@ -350,7 +332,7 @@ return (
                       marginTop: 10
                     }}
                   >
-                    <option value=""></option>
+                    <option value="">Category</option>
 
                     {/* <option value='4'>XL</option> */}
 
@@ -473,31 +455,31 @@ return (
                   />
                 </Grid>
                 <Grid item xs={12} lg={6}>
-                  <Field
-                    name="category_id"
-                    as="select"
-                    style={{
-                      padding: 10,
-                      width: '100%',
-                      borderRadius: 5,
-                      border: errors?.category_id ? '2px solid red' : '1px solid',
-                      marginTop: 10
-                    }}
-                  >
-                    <option value="">Select Atributes</option>
-                    {attributes?.map((map) => {
-                      return (
-                        <option value={map.id}>
-                          {map.name} ({map?.parent?.name})
-                        </option>
-                      );
-                    })}
-
-                    {/* Add more options as needed */}
-                  </Field>
+                  <div className={`multi-select-dropdown ${isOpen ? 'open' : ''}`}>
+                    <div className="dropdown-header" onClick={toggleDropdown}>
+                      Select Options
+                    </div>
+                    {isOpen && (
+                      <div className="dropdown-content">
+                        {attributes
+                          ?.filter((e) => e.type === 'size' && e.name !== 'size')
+                          .map((option) => (
+                            <label key={option.id}>
+                              <input
+                                type="checkbox"
+                                value={option.id}
+                                checked={selectedOptions.includes(option.id)}
+                                onChange={() => handleCheckboxChange(option.id)}
+                              />
+                              {option.name}
+                            </label>
+                          ))}
+                      </div>
+                    )}
+                  </div>
                   <br />
                   <ErrorMessage
-                    name="category_id"
+                    name="size"
                     component="div"
                     style={{ color: 'red', fontSize: 12 }}
                   />
@@ -507,7 +489,7 @@ return (
                     name="features_image"
                     type="file"
                     value={undefined}
-                    //   onChange={onImageChange}
+                    multiple
                     onChange={(event) => {
                       if (event.target.value[0]) {
                         setImageData([...img, event.target.files[0]]);

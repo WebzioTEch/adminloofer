@@ -1,0 +1,35 @@
+.multi-select-dropdown {
+  position: relative;
+  display: block;
+  width:"500px"
+}
+
+.dropdown-header {
+  cursor: pointer;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  
+}
+
+.dropdown-content {
+  position: absolute;
+  top: 85%;
+  left: 0;
+  width: 100%;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 1;
+  margin-top: 5px;
+}
+
+.dropdown-content label {
+  display: block;
+  padding: 8px;
+}
+
+.open {
+  display: block;
+}

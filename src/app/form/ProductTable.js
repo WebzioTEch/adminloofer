@@ -232,7 +232,7 @@ export default function ProductTable() {
   };
 
   var rows = mapCategoryDataToRows(productInfo);
-  console.log(productInfo);
+  console.log(productInfo,"pi");
   return (
     <Box sx={{ height: 400, width: "100%" }}>
       <DataGrid

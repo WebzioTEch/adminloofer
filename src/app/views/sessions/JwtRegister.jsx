@@ -75,6 +75,13 @@ const JwtRegister = () => {
     }
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleFormSubmit(e.currentTarget.form.values);
+    }
+  };
+  
   return (
     <JWTRegister>
       <Card className="card">

@@ -9,42 +9,47 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { makeAtrribute } from 'app/utils/utils';
+import './ProfileForm.css';
 
 const EditProduct = () => {
   const Navigate = useNavigate();
   const dispatch = useDispatch();
-  const [selectedFile, setSelectedFile] = useState(null);
-  const token = useSelector((state) => state.home.token);
-  const [img, setImageData] = useState(null);
   const [category, setCategory] = useState([]);
-  const [attributes, setAttributes] = useState();
-
+  const [attributes, setAttributes] = useState([]);
+  const [img, setImageData] = useState([]);
+  const { id } = useParams();
   const [successMessage, setSuccessMessage] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     product_type: '',
     description: '',
-    sku: '',
     price: '',
     offer_price: '',
     quantity: '',
-    category_id: '',
-    features_image: null
+    stock: ''
   });
-  const[editData, setEditData] = useState();
-  const [productArray, setProductArray] = useState(
-    JSON.parse(String(localStorage.getItem('product_list'))) || []
-  );
-  
-  
-  const {id} = useParams();
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedOptions, setSelectedOptions] = useState([]);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleCheckboxChange = (option) => {
+    const updatedSelection = selectedOptions.includes(option)
+      ? selectedOptions.filter((selectedOption) => selectedOption !== option)
+      : [...selectedOptions, option];
+
+    setSelectedOptions(updatedSelection);
+  };
 
   useEffect(() => {
-    fatchEditData(id);
+    fetchAttributes();
+    fetchCat();
+    fatchData();
   }, []);
 
-  const fatchEditData = (editId) => {
+  const fatchData = () => {
     const config = {
       method: 'POST',
       body: {},
@@ -58,9 +63,14 @@ const EditProduct = () => {
       .then((response) => response.json())
       .then((res) => {
         if (res) {
-          let editData = res.message.filter( p=> p.id ===parseInt(editId))[0];
+          console.log(res.message, 'res reeees');
+          const dataToEdit = res.message.find((e) => e.id === parseInt(id));
 
-          setEditData(editData);
+          for (let i = 0; i < 4; i++) {
+            setImageData([...img,dataToEdit[`features_image[${i === 3 ? 4 : i}]`]]);
+          }
+
+          setFormData(dataToEdit);
         } else {
           Swal.fire({
             title: 'Product Status',
@@ -73,13 +83,7 @@ const EditProduct = () => {
         console.error({ err });
       });
   };
-
-  
-  useEffect(() => {
-    fetchAttributes();
-    fetchCat();
-  }, []);
-
+  console.log(formData, "fd");
   const fetchAttributes = async () => {
     try {
       const config = {
@@ -116,6 +120,7 @@ const EditProduct = () => {
       console.error('Error fetching attributes:', err.message || err.response || err);
     }
   };
+
   async function fetchCat() {
     try {
       const data = await fetch('https://loofer.bellazza.in/api/get_all_category');
@@ -133,30 +138,24 @@ const EditProduct = () => {
       // You can also show an alert or perform other error handling actions here
     }
   }
-  
+
   const handleFormSubmit = (values, index) => {
-    const timer = setTimeout(() => {
-      setSuccessMessage('');
-    }, 2000);
     try {
-      // let img = values.features_image;
-      console.log(img, 'img');
       const formData = new FormData();
       formData.append('name', values.name);
       formData.append('product_type', 1);
       formData.append('description', values.description);
       formData.append('price', values.price);
       formData.append('offer_price', values.offer_price);
-      formData.append('category_id[]', values.category_id);
-
-      formData.append('features_image', img);
+      formData.append('quantity', values.quantity);
+      for (let i = 0; i < img.length; i++) {
+        formData.append(`features_image[${i === 3 ? 4 : i}]`, img[i]);
+      }
       formData.append('stock', values.stock);
-      formData.append('size', 'L');
-
-      formData.append('attribute_value_id[]', values.size);
+      formData.append('attribute_value_id', selectedOptions);
+      formData.append('category_id', values.category_id);
 
       const config = {
-        // method:'POST',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
@@ -166,11 +165,12 @@ const EditProduct = () => {
       axios
         .post(`https://loofer.bellazza.in/api/admin/edit_product/${id}`, formData, config)
         .then((res) => {
-          if (res.status == 200) {
-            setSuccessMessage('Product Edited successfully');
+          if (res.status === 200) {
+            setSuccessMessage('Product added successfully');
+            console.log(formData, 'f');
             Swal.fire({
               title: 'Product Status',
-              text: 'Product Edited successfully',
+              text: 'Product added successfully',
               icon: 'success'
             });
             setTimeout(() => {
@@ -189,6 +189,11 @@ const EditProduct = () => {
         })
         .catch((err) => {
           console.error({ err });
+          Swal.fire({
+            title: 'Product Status',
+            text: 'Product Creation Failed',
+            icon: 'error'
+          });
         });
 
       // dispatch(createproductDispatch(formData));
@@ -198,45 +203,34 @@ const EditProduct = () => {
   };
 
   const validationSchema = Yup.object({
-    // email: Yup.string().email('Invalid email address').required('Email is required'),
     name: Yup.string().required('name is required'),
     product_type: Yup.string().required('product_type is required'),
     description: Yup.string().required('description is required'),
-    sku: Yup.number().required('sku is required'),
-    category: Yup.string().required('category is required'),
+    stock: Yup.number().required('stock is required'),
     price: Yup.number().required('price is required'),
     offer_price: Yup.number().required('offer_price is required'),
-    quantity: Yup.number().required('quantity is required'),
-    category_id: Yup.number().required('category_id is required')
+    quantity: Yup.number().required('quantity is required')
+    // size: Yup.array().of(Yup.string()).required('Size is required')
   });
 
-
-
-
+  console.log('img', img);
+  console.log('sf', selectedOptions);
   return (
     <Formik
-      key={editData?.id || 'new'}
       enableReinitialize
       initialValues={{
-        // email:'',
-        name: editData?.name,
-        product_type: editData?.product_type,
-        description: editData?.description,
-        stock: editData?.stock,
-        size: '',
-
-        category: '',
-        price: editData?.price,
-        offer_price: editData?.offer_price,
-        quantity: '',
-        category_id: '',
-        features_image: editData?.features_image
+        name: formData?.name,
+        product_type: formData?.product_type,
+        description: formData?.description,
+        stock: formData?.stock,
+        price: formData?.price,
+        offer_price: formData?.offer_price,
+        quantity: formData?.quantity,
+        category_id: formData?.category_id
       }}
-      // validationSchema={validationSchema}
+      validationSchema={validationSchema}
       onSubmit={(e) => {
-        // e.preventDefault()
         for (let index = 0; index < 1; index++) {
-          // const element = array[index];
           handleFormSubmit(e, index);
         }
       }}
@@ -254,7 +248,7 @@ const EditProduct = () => {
                   background: 'white'
                 }}
               >
-                <h2>Edit Product</h2>
+                <h2>Add New Product</h2>
                 <Divider style={{ marginTop: 20, marginBottom: 20 }} />
                 <Grid container style={{ padding: 10 }} spacing={4}>
                   {successMessage && (
@@ -354,10 +348,9 @@ const EditProduct = () => {
                       style={{ color: 'red', fontSize: 12 }}
                     />
                   </Grid>
-                  {console.log('attributes', attributes)}
                   <Grid item xs={12} lg={6}>
                     <Field
-                      name="size"
+                      name="category_id"
                       as="select"
                       style={{
                         padding: 10,
@@ -367,7 +360,7 @@ const EditProduct = () => {
                         marginTop: 10
                       }}
                     >
-                      <option value=""></option>
+                      <option value="">Category</option>
 
                       {/* <option value='4'>XL</option> */}
 
@@ -396,30 +389,30 @@ const EditProduct = () => {
                     />
                   </Grid>
                   {/* <Grid item xs={12} lg={6}>
-                    <Field
-                      name="category"
-                      type="text"
-                      placeholder="CATEGORY"
-                      style={{
-                        padding: 10,
-                        width: "100%",
-                        borderRadius: 5,
-                        border: errors?.category
-                          ? "2px solid red"
-                          : "1px solid",
-                        marginTop: 10,
-                      }}
-                      inputProps={{
-                        style: { padding: 12 },
-                      }}
-                    />
-                    <br />
-                    <ErrorMessage
-                      name="category"
-                      component="div"
-                      style={{ color: "red", fontSize: 12 }}
-                    />
-                  </Grid> */}
+                  <Field
+                    name="category"
+                    type="text"
+                    placeholder="CATEGORY"
+                    style={{
+                      padding: 10,
+                      width: "100%",
+                      borderRadius: 5,
+                      border: errors?.category
+                        ? "2px solid red"
+                        : "1px solid",
+                      marginTop: 10,
+                    }}
+                    inputProps={{
+                      style: { padding: 12 },
+                    }}
+                  />
+                  <br />
+                  <ErrorMessage
+                    name="category"
+                    component="div"
+                    style={{ color: "red", fontSize: 12 }}
+                  />
+                </Grid> */}
                   <Grid item xs={12} lg={6}>
                     <Field
                       name="price"
@@ -490,31 +483,31 @@ const EditProduct = () => {
                     />
                   </Grid>
                   <Grid item xs={12} lg={6}>
-                    <Field
-                      name="category_id"
-                      as="select"
-                      style={{
-                        padding: 10,
-                        width: '100%',
-                        borderRadius: 5,
-                        border: errors?.category_id ? '2px solid red' : '1px solid',
-                        marginTop: 10
-                      }}
-                    >
-                      <option value="">Select Atributes</option>
-                      {attributes?.map((map) => {
-                        return (
-                          <option value={map.id}>
-                            {map.name} ({map?.parent?.name})
-                          </option>
-                        );
-                      })}
-
-                      {/* Add more options as needed */}
-                    </Field>
+                    <div className={`multi-select-dropdown ${isOpen ? 'open' : ''}`}>
+                      <div className="dropdown-header" onClick={toggleDropdown}>
+                        Select Options
+                      </div>
+                      {isOpen && (
+                        <div className="dropdown-content">
+                          {attributes
+                            ?.filter((e) => e.type === 'size' && e.name !== 'size')
+                            .map((option) => (
+                              <label key={option.id}>
+                                <input
+                                  type="checkbox"
+                                  value={option.id}
+                                  checked={selectedOptions.includes(option.id)}
+                                  onChange={() => handleCheckboxChange(option.id)}
+                                />
+                                {option.name}
+                              </label>
+                            ))}
+                        </div>
+                      )}
+                    </div>
                     <br />
                     <ErrorMessage
-                      name="category_id"
+                      name="size"
                       component="div"
                       style={{ color: 'red', fontSize: 12 }}
                     />
@@ -524,9 +517,11 @@ const EditProduct = () => {
                       name="features_image"
                       type="file"
                       value={undefined}
-                      //   onChange={onImageChange}
+                      multiple
                       onChange={(event) => {
-                        setImageData(event.target.files[0]);
+                        if (event.target.value[0]) {
+                          setImageData([...img, event.target.files[0]]);
+                        }
                       }}
                       // style={{
                       // padding: 10,
@@ -540,6 +535,9 @@ const EditProduct = () => {
                       // }}
                     />
                     <br />
+                    {img?.map((i) => (
+                      <h4>{i?.name}</h4>
+                    ))}
                     <ErrorMessage
                       name="features_image"
                       component="div"

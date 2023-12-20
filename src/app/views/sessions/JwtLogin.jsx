@@ -94,18 +94,19 @@ const JwtLogin = () => {
     //   //   navigate("/");
     //   // }, 20); // Simulating a 2-second delay
   };
-
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleFormSubmit(userEmail, userPassword);
+    }
+  };
   return (
     <JWTRoot>
       <Card className="card">
         <Grid container>
           <Grid item sm={6} xs={12}>
             <JustifyBox p={4} height="100%" sx={{ minWidth: 320 }}>
-              <img
-                src="/assets/images/illustrations/dreamer.svg"
-                width="100%"
-                alt=""
-              />
+              <img src="/assets/images/illustrations/dreamer.svg" width="100%" alt="" />
             </JustifyBox>
           </Grid>
 
@@ -133,10 +134,11 @@ const JwtLogin = () => {
                   label="Email"
                   variant="outlined"
                   value={userEmail}
+                  onKeyPress={handleKeyPress}
                   onChange={(e) => {
                     e.preventDefault();
                     setUserEmail(e.target.value);
-                    console.log("sdasdsad", userEmail);
+                    console.log('sdasdsad', userEmail);
                   }}
                   sx={{ mb: 3 }}
                 />
@@ -150,21 +152,18 @@ const JwtLogin = () => {
                   label="Password"
                   variant="outlined"
                   value={userPassword}
+                  onKeyPress={handleKeyPress}
                   onChange={(e) => {
                     e.preventDefault();
                     setUserPassword(e.target.value);
-                    console.log("sdasdsad", userPassword);
+                    console.log('sdasdsad', userPassword);
                   }}
                   sx={{ mb: 1.5 }}
                 />
 
                 <FlexBox justifyContent="space-between">
                   <FlexBox gap={1}>
-                    <Checkbox
-                      size="small"
-                      name="remember"
-                      sx={{ padding: 0 }}
-                    />
+                    <Checkbox size="small" name="remember" sx={{ padding: 0 }} />
 
                     <Paragraph>Remember Me</Paragraph>
                   </FlexBox>
@@ -180,9 +179,9 @@ const JwtLogin = () => {
                 <LoadingButton
                   onClick={(e) => {
                     e.preventDefault();
-                    console.log("jjjjjjjjjjjj", e);
+                    console.log('jjjjjjjjjjjj', e);
                     // navigate("/dashboard/default");
-                    handleFormSubmit(userEmail,userPassword);
+                    handleFormSubmit(userEmail, userPassword);
                   }}
                   type="button"
                   color="primary"
@@ -199,7 +198,7 @@ const JwtLogin = () => {
                     to="/session/signup"
                     style={{
                       color: theme.palette.primary.main,
-                      marginLeft: 5,
+                      marginLeft: 5
                     }}
                   >
                     Register
